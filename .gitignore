@@ -32,3 +32,9 @@ yarn-error.log*
 
 # vercel
 .vercel
+
+# next-pwa
+#   https://github.com/shadowwalker/next-pwa/tree/master/examples/custom-worker#recommend-gitignore
+**/public/workbox-*.js*
+**/public/sw.js*
+**/public/worker-*.js*
