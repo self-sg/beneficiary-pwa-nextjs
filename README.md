@@ -1,3 +1,6 @@
+[![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/myyk/progressive-web-app-nextjs)
+
+
 # Progressive Web App Example
 
 This example uses [`next-pwa`](https://github.com/shadowwalker/next-pwa) to create a progressive web app (PWA) powered by [Workbox](https://developers.google.com/web/tools/workbox/).
@@ -19,3 +22,11 @@ yarn create next-app --example progressive-web-app progressive-web-app
 ```
 
 Deploy it to the cloud with [Vercel](https://vercel.com/new?utm_source=github&utm_medium=readme&utm_campaign=next-example) ([Documentation](https://nextjs.org/docs/deployment)).
+
+## Local start
+
+* Install dependencies like `npm` and `yarn`.
+
+* Run the commands in [.gitpod.yml](.gitpod.yml)'s `init` section in your terminal.
+
+* Then `yarn run start`
