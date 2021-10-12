@@ -1,4 +1,4 @@
-import BottomNav from './bottomnavbar'
+import BottomNav from '../components/BottomNav'
 import styles from '../styles/Home.module.css'
 
 export default function Home() {
