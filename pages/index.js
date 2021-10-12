@@ -44,6 +44,7 @@ export default function Home() {
           </a>
         </div>
       </main> */}
+      Home
       <BottomNav name='home' />
     </div>
   )
