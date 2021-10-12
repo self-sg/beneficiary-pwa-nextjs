@@ -1,6 +1,6 @@
 import BottomNav from "../components/BottomNav"
 
-const Profile = () => {
+export default function Profile() {
     return (
         <div>
             Profile
@@ -8,5 +8,3 @@ const Profile = () => {
         </div>
     )
 }
-
-export default Profile

@@ -1,6 +1,6 @@
 import BottomNav from "../components/BottomNav"
 
-const Support = () => {
+export default function Support() {
     return (
         <div>
             Support
@@ -8,5 +8,3 @@ const Support = () => {
         </div>
     )
 }
-
-export default Support

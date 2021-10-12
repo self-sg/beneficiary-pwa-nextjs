@@ -8,7 +8,7 @@ import { RiUser5Line, RiUser5Fill } from 'react-icons/ri'
 
 // Thank you to https://github.com/coderzway/next-js-bottom-navigation-bar
 
-const BottomNav = props => {
+export default function BottomNav(props) {
     const router = useRouter()
     const [activeTabs, setActiveTabs] = useState(props.name)
     useEffect(() => {
@@ -29,7 +29,7 @@ const BottomNav = props => {
                 router.push('/')
                 break;
         }
-    }, [activeTabs, router])
+    }, [activeTabs])
 
     return (
         <div className={`${Styles.bottomNav}`}>
@@ -88,5 +88,3 @@ const BottomNav = props => {
         </div>
     )
 }
-
-export default BottomNav

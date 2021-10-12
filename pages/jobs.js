@@ -1,6 +1,6 @@
 import BottomNav from "../components/BottomNav"
 
-const Jobs = () => {
+export default function Jobs() {
     return (
         <div>
             Jobs
@@ -8,5 +8,3 @@ const Jobs = () => {
         </div>
     )
 }
-
-export default Jobs
