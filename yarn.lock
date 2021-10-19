@@ -43,7 +43,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"@babel/core@npm:7.15.8, @babel/core@npm:^7.11.1, @babel/core@npm:^7.15.8":
+"@babel/core@npm:*, @babel/core@npm:7.15.8, @babel/core@npm:^7.11.1":
   version: 7.15.8
   resolution: "@babel/core@npm:7.15.8"
   dependencies:
@@ -5599,14 +5599,12 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "root-workspace-0b6124@workspace:."
   dependencies:
-    "@babel/core": ^7.15.8
     eslint: ^8.0.1
     next: latest
     next-pwa: ^5.4.0
     react: ^17.0.2
     react-dom: ^17.0.2
     react-icons: ^4.3.1
-    webpack: ^5.58.2
   languageName: unknown
   linkType: soft
 
@@ -6561,7 +6559,7 @@ __metadata:
   languageName: node
   linkType: hard
 
-"webpack@npm:^5.58.2":
+"webpack@npm:*":
   version: 5.58.2
   resolution: "webpack@npm:5.58.2"
   dependencies:
