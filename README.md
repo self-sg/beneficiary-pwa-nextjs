@@ -22,7 +22,7 @@ Can fork and deploy at [Vercel](https://vercel.com?utm_source=github&utm_medium=
 
 ### Local start
 
-* Install dependencies like `node` and `yarn`. Note versions in `package.json`.
+* Install dependencies like `node`, `yarn`, `typescript`. Note versions in `package.json`.
 
 * Run the commands in [.gitpod.yml](.gitpod.yml)'s `init` section in your terminal.
 
