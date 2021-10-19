@@ -1,0 +1,8 @@
+{
+    "name": "Progressive Web App NextJS",
+    "description": "A barebones Node.js app using NextJS",
+    "repository": "https://github.com/myyk/progressive-web-app-nextjs",
+    "logo": "https://cdn.rawgit.com/heroku/node-js-getting-started/main/public/node.svg",
+    "keywords": ["node", "nextjs", "heroku"],
+    "image": "heroku/nodejs"
+  }
