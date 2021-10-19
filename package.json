@@ -8,9 +8,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "npx standard",
+    "lint": "npx standard && npx ts-standard",
+    "lint-fix": "npx standard --fix && npx ts-standard --fix",
     "start": "next start -p $PORT",
-    "test": "npx standard --fix && echo 'no place holder'",
+    "test": "yarn run lint-fix && echo 'no place holder'",
     "type-check": "tsc",
     "ci": "yarn run lint"
   },
@@ -27,7 +28,10 @@
     "@types/node": "^16.11.1",
     "@types/react": "^17.0.30",
     "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^8.0.1",
     "standard": "^16.0.4",
+    "ts-standard": "^10.0.0",
     "typescript": "^4.4.4"
   }
 }
