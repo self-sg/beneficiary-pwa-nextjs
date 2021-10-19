@@ -8,9 +8,10 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
+    "lint": "npx standard",
     "start": "next start -p $PORT",
-    "test": "echo 'no place holder'",
-    "ci": "echo 'ci place holder'"
+    "test": "npx standard --fix && echo 'no place holder'",
+    "ci": "yarn run lint"
   },
   "dependencies": {
     "next": "latest",
@@ -19,8 +20,8 @@
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1"
   },
+  "packageManager": "yarn@3.0.2",
   "devDependencies": {
-    "eslint": "^8.0.1"
-  },
-  "packageManager": "yarn@3.0.2"
+    "standard": "^16.0.4"
+  }
 }
