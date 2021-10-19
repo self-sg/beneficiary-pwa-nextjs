@@ -8,7 +8,8 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start -p $PORT",
-    "ci": "yarn run build"
+    "test": "echo 'no place holder'",
+    "ci": "echo 'ci place holder'"
   },
   "dependencies": {
     "next": "latest",
