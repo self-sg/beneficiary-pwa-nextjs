@@ -9,8 +9,8 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "yarn prettier --write . && yarn run lint-js-nofix --fix && yarn run lint-ts-nofix --fix",
-    "lint-nofix": "yarn prettier --check . && yarn run lint-js-nofix && yarn run lint-ts-nofix",
+    "lint": "yarn run lint-js-nofix --fix && yarn run lint-ts-nofix --fix && yarn prettier --write .",
+    "lint-nofix": "yarn run lint-js-nofix && yarn run lint-ts-nofix && yarn prettier --check .",
     "lint-js-nofix": "npx standard",
     "lint-ts-nofix": "eslint . --ext .ts",
     "start": "next start -p $PORT",
