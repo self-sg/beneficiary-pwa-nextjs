@@ -1,4 +1,9 @@
-[![JavaScript Style Guide](https://img.shields.io/badge/code_style-standard-brightgreen.svg)](https://standardjs.com)
+<p align="center">
+  <a href="https://github.com/self-sg/beneficiary-pwa-nextjs/actions?query=workflow%3Aci+branch%3Amain">
+    <img alt="Github Actions Build Status" src="https://img.shields.io/github/workflow/status/self-sg/beneficiary-pwa-nextjs/ci?style=flat-square"></a>
+  <a href="#badge">
+    <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"></a>
+</p>
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/self-sg/beneficiary-pwa-nextjs)
 
@@ -22,8 +27,16 @@ Can fork and deploy at [Vercel](https://vercel.com?utm_source=github&utm_medium=
 
 ### Local start
 
-* Install dependencies like `node` and `yarn`. Note versions in `package.json`.
+- Install dependencies like `node`, `yarn`, `typescript`. Note versions in `package.json`.
 
-* Run the commands in [.gitpod.yml](.gitpod.yml)'s `init` section in your terminal.
+- Run the commands in [.gitpod.yml](.gitpod.yml)'s `init` section in your terminal.
 
-* Then `yarn run dev`
+- If everything is installed correctly, `yarn run ci` should pass without any file changes on `main`.
+
+- Then `yarn run dev`
+
+### How to contribute
+
+- We've setup automation to try to keep `main` always deployable.
+
+- Your workflow should look pretty standard like this: https://guides.github.com/introduction/flow/

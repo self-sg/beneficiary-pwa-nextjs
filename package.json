@@ -5,23 +5,37 @@
     "npm": "6.x",
     "yarn": "3.x"
   },
+  "packageManager": "yarn@3.0.2",
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "npx standard",
+    "lint": "yarn run lint-js-nofix --fix && yarn run lint-ts-nofix --fix && yarn prettier --write .",
+    "lint-nofix": "yarn run lint-js-nofix && yarn run lint-ts-nofix && yarn prettier --check .",
+    "lint-js-nofix": "eslint . --ext .js",
+    "lint-ts-nofix": "eslint . --ext .ts",
     "start": "next start -p $PORT",
-    "test": "npx standard --fix && echo 'no place holder'",
-    "ci": "yarn run lint"
+    "test": "yarn run lint && echo 'no place holder'",
+    "type-check": "tsc",
+    "ci": "yarn run lint-nofix && yarn run test"
   },
   "dependencies": {
+    "@types/node": "^16.11.1",
     "next": "latest",
     "next-pwa": "^5.4.0",
     "react": "^17.0.2",
     "react-dom": "^17.0.2",
     "react-icons": "^4.3.1"
   },
-  "packageManager": "yarn@3.0.2",
   "devDependencies": {
-    "standard": "^16.0.4"
+    "@types/node": "^16.11.1",
+    "@types/react": "^17.0.30",
+    "@types/react-dom": "^17.0.9",
+    "@typescript-eslint/eslint-plugin": "^5.1.0",
+    "@typescript-eslint/parser": "^5.1.0",
+    "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
+    "prettier": "^2.4.1",
+    "typescript": "^4.4.4"
   }
 }

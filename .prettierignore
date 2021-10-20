@@ -1,0 +1,5 @@
+.next
+.yarn
+node_modules
+public/sw.js*
+public/workbox*.js*
