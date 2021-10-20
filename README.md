@@ -22,8 +22,16 @@ Can fork and deploy at [Vercel](https://vercel.com?utm_source=github&utm_medium=
 
 ### Local start
 
-* Install dependencies like `node`, `yarn`, `typescript`. Note versions in `package.json`.
+- Install dependencies like `node`, `yarn`, `typescript`. Note versions in `package.json`.
 
-* Run the commands in [.gitpod.yml](.gitpod.yml)'s `init` section in your terminal.
+- Run the commands in [.gitpod.yml](.gitpod.yml)'s `init` section in your terminal.
 
-* Then `yarn run dev`
+- If everything is installed correctly, `yarn run ci` should pass without any file changes on `main`.
+
+- Then `yarn run dev`
+
+### How to contribute
+
+- We've setup automation to try to keep `main` always deployable.
+
+- Your workflow should look pretty standard like this: https://guides.github.com/introduction/flow/

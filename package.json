@@ -9,15 +9,14 @@
   "scripts": {
     "dev": "next dev",
     "build": "next build",
-    "lint": "yarn run lint-js-nofix --fix && yarn run lint-ts-nofix --fix",
-    "lint-nofix": "yarn run lint-js-nofix && yarn run lint-ts-nofix",
+    "lint": "yarn prettier --write . && yarn run lint-js-nofix --fix && yarn run lint-ts-nofix --fix",
+    "lint-nofix": "yarn prettier --check . && yarn run lint-js-nofix && yarn run lint-ts-nofix",
     "lint-js-nofix": "npx standard",
     "lint-ts-nofix": "eslint . --ext .ts",
-    "prettier-format": "prettier --config .prettierrc 'src/**/*.ts' --write",
     "start": "next start -p $PORT",
     "test": "yarn run lint && echo 'no place holder'",
     "type-check": "tsc",
-    "ci": "yarn run lint-nofix"
+    "ci": "yarn run lint-nofix && yarn run test"
   },
   "dependencies": {
     "@types/node": "^16.11.1",
@@ -34,6 +33,8 @@
     "@typescript-eslint/eslint-plugin": "^5.1.0",
     "@typescript-eslint/parser": "^5.1.0",
     "eslint": "^7.32.0",
+    "eslint-config-prettier": "^8.3.0",
+    "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",
     "standard": "^16.0.4",
     "typescript": "^4.4.4"

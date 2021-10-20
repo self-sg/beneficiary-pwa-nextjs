@@ -20,7 +20,7 @@ jobs:
           GITHUB_TOKEN=${{ github.token }} yarn run all
       - name: Generate Commit Message
         id: generate_commit_message
-        # eg: ⬆️ Bump @types/node-16.9.4 npm packages 
+        # eg: ⬆️ Bump @types/node-16.9.4 npm packages
         run: |
           branch=${GITHUB_REF#refs/heads/}
           # add `[dependabot skip]` prefix so Dependabot force pushes any rebases over our changes triggering the action again
