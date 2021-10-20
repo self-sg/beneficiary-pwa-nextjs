@@ -11,7 +11,7 @@
     "build": "next build",
     "lint": "yarn run lint-js-nofix --fix && yarn run lint-ts-nofix --fix && yarn prettier --write .",
     "lint-nofix": "yarn run lint-js-nofix && yarn run lint-ts-nofix && yarn prettier --check .",
-    "lint-js-nofix": "npx standard",
+    "lint-js-nofix": "eslint . --ext .js",
     "lint-ts-nofix": "eslint . --ext .ts",
     "start": "next start -p $PORT",
     "test": "yarn run lint && echo 'no place holder'",
@@ -36,7 +36,6 @@
     "eslint-config-prettier": "^8.3.0",
     "eslint-plugin-prettier": "^4.0.0",
     "prettier": "^2.4.1",
-    "standard": "^16.0.4",
     "typescript": "^4.4.4"
   }
 }

@@ -3,8 +3,6 @@
     <img alt="Github Actions Build Status" src="https://img.shields.io/github/workflow/status/self-sg/beneficiary-pwa-nextjs/ci?style=flat-square"></a>
   <a href="#badge">
     <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-prettier-ff69b4.svg?style=flat-square"></a>
-  <a href="#badge">
-    <img alt="code style: prettier" src="https://img.shields.io/badge/code_style-standard-brightgreen.svg?style=flat-square"></a>
 </p>
 
 [![Open in Gitpod](https://gitpod.io/button/open-in-gitpod.svg)](https://gitpod.io/#https://github.com/self-sg/beneficiary-pwa-nextjs)

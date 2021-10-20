@@ -1,5 +1,6 @@
 .next
 .yarn
+next.config.js
 node_modules
 public/sw.js*
 public/workbox*.js*
