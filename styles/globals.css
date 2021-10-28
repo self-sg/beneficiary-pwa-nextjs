@@ -2,8 +2,7 @@ html,
 body {
   padding: 0;
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
-    Ubuntu, Cantarell, Fira Sans, Droid Sans, Helvetica Neue, sans-serif;
+  font-family: 'Poppins', 'Roboto', sans-serif;
 }
 
 a {
@@ -13,4 +12,152 @@ a {
 
 * {
   box-sizing: border-box;
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: bold;
+  font-weight: 700;
+  src: local('Poppins'), url(/public/fonts/Poppins-Bold.tff) format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: semibold;
+  font-weight: 600;
+  src: local('Poppins'),
+    url(/public/fonts/Poppins-Semibold.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: medium;
+  font-weight: 500;
+  src: local('Poppins'),
+    url(/public/fonts/Poppins-Medium.ttf) format('truetype');
+}
+
+@font-face {
+  font-family: 'Poppins';
+  font-style: regular;
+  font-weight: 400;
+  src: local('Poppins'),
+    url(/public/fonts/Poppins-Regular.tff) format('truetype');
+}
+
+@font-face {
+  font-family: 'Roboto';
+  font-style: regular;
+  font-weight: 400;
+  src: local('Roboto'), url(/public/fonts/Roboto-Regular.tff) format('truetype');
+}
+
+:root {
+  /* COLORS */
+  --accent-primary: #8e3d57;
+  --accent-secondary: #f2b3be;
+  --accent-active: #f8c78b;
+  --accent-label: #d8a190;
+  --accent-font: #737373;
+  --accent-black: #333333;
+  --accent-white: #ffffff;
+  --accent-link: #0645ad;
+  --accent-disabled: #929292;
+  --accent-success: #51c11c;
+  --accent-error: #ef3e3e;
+
+  /* FONT SIZE */
+  --fs-32: 32px;
+  --fs-28: 28px;
+  --fs-24: 24px;
+  --fs-20: 20px;
+  --fs-16: 20px;
+  --fs-14: 16px;
+  --fs-13: 14px;
+
+  /* FONT WEIGHT */
+  --fw-regular: 400;
+  --fw-medium: 500;
+  --fw-semibold: 600;
+  --fw-bold: 700;
+}
+
+h1 {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-32);
+  font-weight: var(--fw-bold);
+}
+
+h2 {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-28);
+  font-weight: var(--fw-bold);
+}
+
+h3 {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-24);
+  font-weight: var(--fw-bold);
+}
+
+h4 {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+}
+
+.text-body-intro {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-bold);
+}
+
+.text-body-main {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-regular);
+}
+
+.text-m-r {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-regular);
+}
+
+.text-m-sb {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-16);
+  font-weight: var(--fw-semibold);
+}
+
+.text-caption {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-regular);
+}
+
+.text-s {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-13);
+  font-weight: var(--fw-regular);
+}
+
+.text-ls {
+  font-family: 'Roboto', sans-serif;
+  font-size: var(--fs-14);
+  font-weight: var(--fw-regular);
+}
+
+.flex-column {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.flex-row {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
+  align-items: center;
 }
