@@ -1,0 +1,21 @@
+.button {
+  padding: 14px 0;
+  font-size: var(--fs-16);
+  width: 326px;
+  height: 52px;
+  border-radius: 8px;
+  border: 0px;
+}
+
+.primary {
+  composes: button;
+  background-color: var(--accent-primary);
+  color: var(--accent-white);
+}
+
+.secondary {
+  composes: button;
+  background-color: var(--accent-white);
+  color: var(--accent-label);
+  border: 1px solid var(--accent-label);
+}
