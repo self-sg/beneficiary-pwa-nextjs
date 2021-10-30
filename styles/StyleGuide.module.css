@@ -1,0 +1,23 @@
+.group {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  border: 0.2em solid var(--accent-primary);
+  border-radius: 2em;
+  padding: 2em;
+  margin: 1em 0;
+}
+
+.groupTitle {
+  color: var(--accent-primary);
+  font-size: var(--fs-32);
+}
+
+.swatch {
+  width: 57px;
+  height: 57px;
+  margin: 0.3em;
+  border: 0.1em solid var(--accent-primary);
+  border-radius: 2em;
+}
