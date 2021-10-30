@@ -17,7 +17,7 @@ This example uses [`next-pwa`](https://github.com/shadowwalker/next-pwa) to crea
 
 Can deploy at Heroku. `main` is currently deployed at ask `myyk` if you need access to the project in Heroku:
 
-https://hidden-garden-90143.herokuapp.com/
+https://pacific-tor-68576.herokuapp.com/
 
 ### Vercel
 
