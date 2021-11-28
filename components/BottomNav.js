@@ -1,20 +1,17 @@
 import Styles from '../styles/BottomNav.module.css'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import {
-  RiHomeSmile2Line,
-  RiHomeSmile2Fill,
-  RiSearchEyeFill,
-  RiUser5Line,
-  RiUser5Fill
-} from 'react-icons/ri'
-import { BiSearchAlt } from 'react-icons/bi'
-import { AiOutlineHeart, AiFillHeart } from 'react-icons/ai'
+import profile from '../public/assets/icon-profile.svg'
+import profileActive from '../public/assets/icon-profile-active.svg'
+import support from '../public/assets/icon-support.svg'
+import supportActive from '../public/assets/icon-support-active.svg'
+import Image from 'next/image'
 
 // Thank you to https://github.com/coderzway/next-js-bottom-navigation-bar
 
 export default function BottomNav(props) {
   const router = useRouter()
+
   const [activeTabs, setActiveTabs] = useState(props.name)
   useEffect(() => {
     switch (activeTabs) {
@@ -39,61 +36,35 @@ export default function BottomNav(props) {
   return (
     <div className={`${Styles.bottomNav}`}>
       <div className={`${Styles.bnTab}`}>
-        {activeTabs === 'home' ? (
-          <RiHomeSmile2Fill
-            size="35"
-            color="#000"
-            onClick={() => setActiveTabs('home')}
-          />
-        ) : (
-          <RiHomeSmile2Line
-            size="35"
-            color="#000"
-            onClick={() => setActiveTabs('home')}
-          />
-        )}
-      </div>
-      <div className={`${Styles.bnTab}`}>
         {activeTabs === 'support' ? (
-          <RiSearchEyeFill
-            size="35"
-            color="#000"
+          <Image
+            src={supportActive}
+            alt="supportIconActive"
+            style={{ width: 50 }}
             onClick={() => setActiveTabs('support')}
           />
         ) : (
-          <BiSearchAlt
-            size="35"
-            color="#000"
+          <Image
+            src={support}
+            alt="supportIcon"
+            style={{ width: 50 }}
             onClick={() => setActiveTabs('support')}
-          />
-        )}
-      </div>
-      <div className={`${Styles.bnTab}`}>
-        {activeTabs === 'jobs' ? (
-          <AiFillHeart
-            size="35"
-            color="#000"
-            onClick={() => setActiveTabs('jobs')}
-          />
-        ) : (
-          <AiOutlineHeart
-            size="35"
-            color="#000"
-            onClick={() => setActiveTabs('jobs')}
           />
         )}
       </div>
       <div className={`${Styles.bnTab}`}>
         {activeTabs === 'profile' ? (
-          <RiUser5Fill
-            size="35"
-            color="#000"
+          <Image
+            src={profileActive}
+            alt="profileIconActive"
+            style={{ width: 50 }}
             onClick={() => setActiveTabs('profile')}
           />
         ) : (
-          <RiUser5Line
-            size="35"
-            color="#000"
+          <Image
+            src={profile}
+            alt="profileIcon"
+            style={{ width: 50 }}
             onClick={() => setActiveTabs('profile')}
           />
         )}
