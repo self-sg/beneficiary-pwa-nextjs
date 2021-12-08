@@ -7,18 +7,14 @@ import { useRouter } from 'next/router'
 export default function Support() {
   const router = useRouter()
   const goNextPage = () => {
-    router.push('/supportsubcat')
+    router.push('/supportlisting')
   }
   return (
     <div className={styles.container}>
       {}
-      <TopNav pageName={'Support'} displayBackButton={true} />
-      <Button
-        type="primary"
-        text="View sub category"
-        clickHandler={goNextPage}
-      />
-      <BottomNav name="support" />
+      <TopNav pageName={'Support Subcategory'} displayBackButton={true} />
+      <Button type="primary" text="View listing" clickHandler={goNextPage} />
+      <BottomNav name="supportsubcat" />
     </div>
   )
 }

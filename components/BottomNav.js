@@ -21,6 +21,12 @@ export default function BottomNav(props) {
       case 'support':
         router.push('/support')
         break
+      case 'supportsubcat':
+        router.push('/supportsubcat')
+        break
+      case 'supportlisting':
+        router.push('/supportlisting')
+        break
       case 'jobs':
         router.push('/jobs')
         break
