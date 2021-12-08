@@ -1,10 +1,10 @@
 import Styles from '../styles/BottomNav.module.css'
 import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
-import profile from '../public/assets/icon-profile.svg'
-import profileActive from '../public/assets/icon-profile-active.svg'
-import support from '../public/assets/icon-support.svg'
-import supportActive from '../public/assets/icon-support-active.svg'
+import profile from '../public/assets/navigation/profile.svg'
+import profileActive from '../public/assets/navigation/profile-active.svg'
+import support from '../public/assets/navigation/support.svg'
+import supportActive from '../public/assets/navigation/support-active.svg'
 import Image from 'next/image'
 
 // Thank you to https://github.com/coderzway/next-js-bottom-navigation-bar
