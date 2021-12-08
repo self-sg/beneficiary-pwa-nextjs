@@ -1,0 +1,195 @@
+.container {
+  position: relative;
+  text-align: center;
+  color: white;
+  border-radius: 8px;
+  overflow: hidden;
+  height: 100px;
+}
+
+.container::before {
+  position: absolute;
+  display: block;
+  width: 100%;
+  height: 100%;
+  content: '';
+  z-index: 1;
+}
+
+/* Different image overlay */
+
+/* CAREER */
+.career01 {
+  composes: container;
+}
+
+.career01::before {
+  background: rgba(84, 62, 29, 0.7);
+}
+
+.career02 {
+  composes: container;
+}
+
+.career02::before {
+  background: rgba(59, 41, 97, 0.7);
+}
+
+/* HEALTHCARE */
+.healthcare01 {
+  composes: container;
+}
+
+.healthcare01::before {
+  background: rgba(85, 40, 101, 0.7);
+}
+
+.healthcare02 {
+  composes: container;
+}
+
+.healthcare02::before {
+  background: rgba(113, 46, 46, 0.7);
+}
+
+.healthcare03 {
+  composes: container;
+}
+
+.healthcare03::before {
+  background: rgba(100, 35, 35, 0.7);
+}
+
+/* FINANCIAL ASSISTANCE */
+.financial01 {
+  composes: container;
+}
+
+.financial01::before {
+  background: rgba(147, 81, 44, 0.7);
+}
+
+.financial02 {
+  composes: container;
+}
+
+.financial02::before {
+  background: rgba(140, 61, 61, 0.7);
+}
+
+.financial03 {
+  composes: container;
+}
+
+.financial03::before {
+  background: rgba(91, 50, 50, 0.7);
+}
+
+.financial04 {
+  composes: container;
+}
+
+.financial04::before {
+  background: rgba(130, 105, 75, 0.7);
+}
+
+/* SELF DEVELOPMENT */
+.self01 {
+  composes: container;
+}
+
+.self01::before {
+  background: rgba(152, 68, 68, 0.7);
+}
+
+.self02 {
+  composes: container;
+}
+
+.self02::before {
+  background: rgba(86, 74, 157, 0.7);
+}
+
+/* FAMILY SERVICES */
+.family01 {
+  composes: container;
+}
+
+.family01::before {
+  background: rgba(151, 80, 105, 0.7);
+}
+
+.family02 {
+  composes: container;
+}
+
+.family02::before {
+  background: rgba(144, 101, 36, 0.7);
+}
+
+/* CHILDREN EDUCATION */
+.children01 {
+  composes: container;
+}
+
+.children01::before {
+  background: rgba(102, 83, 36, 0.7);
+}
+
+.children02 {
+  composes: container;
+}
+
+.children02::before {
+  background: rgba(118, 75, 75, 0.7);
+}
+
+.children03 {
+  composes: container;
+}
+
+.children03::before {
+  background: rgba(165, 98, 61, 0.7);
+}
+
+.children04 {
+  composes: container;
+}
+
+.children04::before {
+  background: rgba(142, 61, 75, 0.7);
+}
+/* LEGAL */
+.legal01 {
+  composes: container;
+}
+
+.legal01::before {
+  background: rgba(90, 46, 46, 0.7);
+}
+
+.legal02 {
+  composes: container;
+}
+
+.legal02::before {
+  background: rgba(159, 126, 94, 0.7);
+}
+
+.legal03 {
+  composes: container;
+}
+
+.legal03::before {
+  background: rgba(143, 99, 143, 0.7);
+}
+
+/* Centered text */
+.centered {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 80%;
+  transform: translate(-50%, -50%);
+  z-index: 2;
+}
