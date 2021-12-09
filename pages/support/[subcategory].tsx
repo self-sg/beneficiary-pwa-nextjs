@@ -2,6 +2,7 @@ import BottomNav from '../../components/BottomNav'
 import styles from '../../styles/Home.module.css'
 import TopNav from '../../components/TopNav'
 import { useRouter } from 'next/router'
+import { useState, useEffect } from 'react'
 import Image from 'next/image'
 import career from '../../public/assets/category/career.svg'
 import healthcare from '../../public/assets/category/healthcare.svg'
@@ -13,13 +14,13 @@ import legal from '../../public/assets/category/legal.svg'
 import SubCategory from '../../components/support/SubCategory'
 
 export default function Support() {
-  const router = useRouter()
-  console.log(router)
-  const type = router.asPath.split('/')[2]
+  const [category_ref, set_category_ref] = useState({
+    type: 'career',
+    image: career,
+    text: 'Career'
+  }) // set default values for prerendering
 
-  // const goNextPage = () => {
-  //   router.push('/supportlisting')
-  // }
+  const [filtered_subcat_list, set_filtered_subcat_list] = useState([])
 
   const subcat_list = [
     { type: 'career', style: 'career01', text: 'Work Programme' },
@@ -53,12 +54,16 @@ export default function Support() {
     { type: 'children', image: children, text: 'Children Education' },
     { type: 'legal', image: legal, text: 'Legal' }
   ]
+  const router = useRouter()
+  let type
 
-  const filtered_subcat_list = subcat_list.filter(
-    (subcat) => subcat.type === type
-  )
-
-  const category_ref = category_list.filter((cat) => cat.type === type)[0]
+  useEffect(() => {
+    if (router.isReady) type = router.asPath.split('/')[2]
+    set_category_ref(category_list.filter((cat) => cat.type === type)[0])
+    set_filtered_subcat_list(
+      subcat_list.filter((subcat) => subcat.type === type)
+    )
+  }, [router.isReady])
 
   return (
     <div className={styles.container}>
