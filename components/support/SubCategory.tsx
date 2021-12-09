@@ -51,7 +51,6 @@ const image_dict = {
 }
 
 export default function SubCategory(props: Props) {
-  const type = props.style
   return (
     <div className={`${styles[props.style]}`}>
       <Image src={image_dict[`${props.style}`]} />
