@@ -1,79 +1,56 @@
 import Styles from '../styles/BottomNav.module.css'
-import { useState, useEffect } from 'react'
-import { useRouter } from 'next/router'
+import { useState } from 'react'
 import profile from '../public/assets/navigation/profile.svg'
 import profileActive from '../public/assets/navigation/profile-active.svg'
 import support from '../public/assets/navigation/support.svg'
 import supportActive from '../public/assets/navigation/support-active.svg'
 import Image from 'next/image'
+import Link from 'next/link'
 
 // Thank you to https://github.com/coderzway/next-js-bottom-navigation-bar
 
 export default function BottomNav(props) {
-  const router = useRouter()
-
   const [activeTabs, setActiveTabs] = useState(props.name)
-  useEffect(() => {
-    switch (activeTabs) {
-      case 'home':
-        router.push('/')
-        break
-      case 'support':
-        router.push('/support')
-        break
-      case 'supportsubcat':
-        router.push('/supportsubcat')
-        break
-      case 'supportlisting':
-        router.push('/supportlisting')
-        break
-      case 'jobs':
-        router.push('/jobs')
-        break
-      case 'profile':
-        router.push('/profile')
-        break
-      default:
-        router.push('/')
-        break
-    }
-  }, [activeTabs])
 
   return (
     <div className={`${Styles.bottomNav}`}>
       <div className={`${Styles.bnTab}`}>
-        {activeTabs === 'support' ? (
-          <Image
-            src={supportActive}
-            alt="supportIconActive"
-            style={{ width: 50 }}
-            onClick={() => setActiveTabs('support')}
-          />
-        ) : (
-          <Image
-            src={support}
-            alt="supportIcon"
-            style={{ width: 50 }}
-            onClick={() => setActiveTabs('support')}
-          />
-        )}
+        <Link href="/support">
+          {activeTabs === 'support' ? (
+            <Image
+              src={supportActive}
+              alt="supportIconActive"
+              style={{ width: 50 }}
+              onClick={() => setActiveTabs('support')}
+            />
+          ) : (
+            <Image
+              src={support}
+              alt="supportIcon"
+              style={{ width: 50 }}
+              onClick={() => setActiveTabs('support')}
+            />
+          )}
+        </Link>
       </div>
       <div className={`${Styles.bnTab}`}>
-        {activeTabs === 'profile' ? (
-          <Image
-            src={profileActive}
-            alt="profileIconActive"
-            style={{ width: 50 }}
-            onClick={() => setActiveTabs('profile')}
-          />
-        ) : (
-          <Image
-            src={profile}
-            alt="profileIcon"
-            style={{ width: 50 }}
-            onClick={() => setActiveTabs('profile')}
-          />
-        )}
+        <Link href="/profile">
+          {activeTabs === 'profile' ? (
+            <Image
+              src={profileActive}
+              alt="profileIconActive"
+              style={{ width: 50 }}
+              onClick={() => setActiveTabs('profile')}
+            />
+          ) : (
+            <Image
+              src={profile}
+              alt="profileIcon"
+              style={{ width: 50 }}
+              onClick={() => setActiveTabs('profile')}
+            />
+          )}
+        </Link>
       </div>
     </div>
   )
