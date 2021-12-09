@@ -20,14 +20,12 @@ export default function BottomNav(props) {
             <Image
               src={supportActive}
               alt="supportIconActive"
-              style={{ width: 50 }}
               onClick={() => setActiveTabs('support')}
             />
           ) : (
             <Image
               src={support}
               alt="supportIcon"
-              style={{ width: 50 }}
               onClick={() => setActiveTabs('support')}
             />
           )}
@@ -39,14 +37,12 @@ export default function BottomNav(props) {
             <Image
               src={profileActive}
               alt="profileIconActive"
-              style={{ width: 50 }}
               onClick={() => setActiveTabs('profile')}
             />
           ) : (
             <Image
               src={profile}
               alt="profileIcon"
-              style={{ width: 50 }}
               onClick={() => setActiveTabs('profile')}
             />
           )}
