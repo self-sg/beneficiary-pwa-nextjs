@@ -51,6 +51,7 @@ const image_dict = {
 }
 
 export default function SubCategory(props: Props) {
+<<<<<<< HEAD
   if (image_dict[`${props.style}`] == null) {
     console.log(
       'error in SubCategory.tsx: image_dict[`${props.style}`] is undefined as style prop does not exist as a key in image_dict.'
@@ -66,4 +67,15 @@ export default function SubCategory(props: Props) {
       </div>
     )
   }
+=======
+  const type = props.style
+  return (
+    <div className={`${styles[props.style]}`}>
+      <Image src={image_dict[`${props.style}`]} />
+      <div className={styles.centered}>
+        <p className="text-body-main">{props.text}</p>
+      </div>
+    </div>
+  )
+>>>>>>> d0c3f58... add dynamic routing and basic skeleton for support feature (still a wip)
 }
