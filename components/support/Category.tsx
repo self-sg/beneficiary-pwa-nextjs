@@ -14,7 +14,6 @@ interface Props {
   clickHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-<<<<<<< HEAD
 const category_dict = {
   career: [career, 'Career'],
   healthcare: [healthcare, 'Healthcare'],
@@ -46,32 +45,4 @@ export default function Category(props: Props) {
       </div>
     )
   }
-=======
-const category_list = [
-  { type: 'career', image: career, text: 'Career' },
-  { type: 'healthcare', image: healthcare, text: 'Healthcare' },
-  { type: 'financial', image: financial, text: 'Financial Assistance' },
-  { type: 'self', image: self, text: 'Self Development' },
-  { type: 'family', image: family, text: 'Family Services' },
-  { type: 'children', image: children, text: 'Children Education' },
-  { type: 'legal', image: legal, text: 'Legal' }
-]
-
-export default function Category(props: Props) {
-  const type = props.type
-  const category_ref = category_list.filter(
-    (category) => category.type === type
-  )[0]
-
-  return (
-    <div>
-      <Link href={`/support/${category_ref.type}`}>
-        <div>
-          <Image src={category_ref.image} />
-          <p className="text-body-main">{category_ref.text}</p>
-        </div>
-      </Link>
-    </div>
-  )
->>>>>>> d0c3f58... add dynamic routing and basic skeleton for support feature (still a wip)
 }
