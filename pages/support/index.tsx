@@ -25,7 +25,7 @@ export default function Support() {
         ))}
       </div>
 
-      <BottomNav name="support" />
+      <BottomNav featureName="support" />
     </div>
   )
 }

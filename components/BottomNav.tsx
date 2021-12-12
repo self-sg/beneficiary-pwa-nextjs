@@ -9,8 +9,12 @@ import Link from 'next/link'
 
 // Thank you to https://github.com/coderzway/next-js-bottom-navigation-bar
 
-export default function BottomNav(props) {
-  const [activeTabs, setActiveTabs] = useState(props.name)
+interface Props {
+  featureName: string
+}
+
+export default function BottomNav(props: Props) {
+  const [activeTabs, setActiveTabs] = useState(props.featureName)
 
   return (
     <div className={styles.navbar}>

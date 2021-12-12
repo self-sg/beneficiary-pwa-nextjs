@@ -82,7 +82,7 @@ export default function Support() {
         {filtered_subcat_list.map((subcat) => (
           <SubCategory style={subcat.style} text={subcat.text} />
         ))}
-        <BottomNav name="support" />
+        <BottomNav featureName="support" />
       </div>
     )
   }

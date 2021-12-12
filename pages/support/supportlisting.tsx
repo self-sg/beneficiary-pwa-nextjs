@@ -7,7 +7,7 @@ export default function SupportListing() {
     <div className={styles.container}>
       {}
       <TopNav pageName={'Support Listing'} displayBackButton={true} />
-      <BottomNav name="support" />
+      <BottomNav featureName="support" />
     </div>
   )
 }

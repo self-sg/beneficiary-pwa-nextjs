@@ -8,7 +8,7 @@ export default function Profile() {
       {}
       <TopNav pageName={'My Profile'} displayBackButton={false} />
       Profile
-      <BottomNav name="profile" />
+      <BottomNav featureName="profile" />
     </div>
   )
 }
