@@ -14,28 +14,31 @@ interface Props {
   clickHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
-const category_list = [
-  { type: 'career', image: career, text: 'Career' },
-  { type: 'healthcare', image: healthcare, text: 'Healthcare' },
-  { type: 'financial', image: financial, text: 'Financial Assistance' },
-  { type: 'self', image: self, text: 'Self Development' },
-  { type: 'family', image: family, text: 'Family Services' },
-  { type: 'children', image: children, text: 'Children Education' },
-  { type: 'legal', image: legal, text: 'Legal' }
-]
+const category_dict = {
+  career: [career, 'Career'],
+  healthcare: [healthcare, 'Healthcare'],
+  financial: [financial, 'Financial Assistance'],
+  self: [self, 'Self Development'],
+  family: [family, 'Family Services'],
+  children: [children, 'Children Education'],
+  legal: [legal, 'Legal']
+}
 
 export default function Category(props: Props) {
   const type = props.type
-  const category_ref = category_list.filter(
-    (category) => category.type === type
-  )[0]
+  const category_ref =
+    category_dict[`${type}`] == null
+      ? console.log(
+          'error in Category.tsx: category_ref is undefined as category type does not exist.'
+        )
+      : category_dict[`${type}`]
 
   return (
     <div>
-      <Link href={`/support/${category_ref.type}`}>
+      <Link href={`/support/${type}`}>
         <div>
-          <Image src={category_ref.image} />
-          <p className="text-body-main">{category_ref.text}</p>
+          <Image src={category_ref[0]} />
+          <p className="text-body-main">{category_ref[1]}</p>
         </div>
       </Link>
     </div>

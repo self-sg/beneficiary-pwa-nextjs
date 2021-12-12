@@ -14,11 +14,7 @@ import legal from '../../public/assets/category/legal.svg'
 import SubCategory from '../../components/support/SubCategory'
 
 export default function Support() {
-  const [category_ref, set_category_ref] = useState({
-    type: 'career',
-    image: career,
-    text: 'Career'
-  }) // set default values for prerendering
+  const [category_ref, set_category_ref] = useState([career, 'Career']) // set default values for prerendering
 
   const [filtered_subcat_list, set_filtered_subcat_list] = useState([])
 
@@ -45,21 +41,27 @@ export default function Support() {
     { type: 'legal', style: 'legal03', text: 'Employment Rights' }
   ]
 
-  const category_list = [
-    { type: 'career', image: career, text: 'Career' },
-    { type: 'healthcare', image: healthcare, text: 'Healthcare' },
-    { type: 'financial', image: financial, text: 'Financial Assistance' },
-    { type: 'self', image: self, text: 'Self Development' },
-    { type: 'family', image: family, text: 'Family Services' },
-    { type: 'children', image: children, text: 'Children Education' },
-    { type: 'legal', image: legal, text: 'Legal' }
-  ]
+  const category_dict = {
+    career: [career, 'Career'],
+    healthcare: [healthcare, 'Healthcare'],
+    financial: [financial, 'Financial Assistance'],
+    self: [self, 'Self Development'],
+    family: [family, 'Family Services'],
+    children: [children, 'Children Education'],
+    legal: [legal, 'Legal']
+  }
+
   const router = useRouter()
   let type
 
   useEffect(() => {
     if (router.isReady) type = router.asPath.split('/')[2]
-    set_category_ref(category_list.filter((cat) => cat.type === type)[0])
+    category_dict[`${type}`] == null
+      ? console.log(
+          'error in [subcategory].tsx: category_ref state is not updated correctly as category type does not exist.'
+        )
+      : set_category_ref(category_dict[`${type}`])
+
     set_filtered_subcat_list(
       subcat_list.filter((subcat) => subcat.type === type)
     )
@@ -69,8 +71,8 @@ export default function Support() {
     <div className={styles.container}>
       {}
       <TopNav pageName={'Support Subcategory'} displayBackButton={true} />
-      <Image src={category_ref.image} />
-      <h4>{category_ref.text}</h4> {/*  TODO: change weight to semibold */}
+      <Image src={category_ref[0]} />
+      <h4>{category_ref[1]}</h4> {/*  TODO: change weight to semibold */}
       {filtered_subcat_list.map((subcat) => (
         <SubCategory style={subcat.style} text={subcat.text} />
       ))}
