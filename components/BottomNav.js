@@ -1,4 +1,4 @@
-import Styles from '../styles/BottomNav.module.css'
+import styles from '../styles/BottomNav.module.css'
 import { useState } from 'react'
 import profile from '../public/assets/navigation/profile.svg'
 import profileActive from '../public/assets/navigation/profile-active.svg'
@@ -13,38 +13,50 @@ export default function BottomNav(props) {
   const [activeTabs, setActiveTabs] = useState(props.name)
 
   return (
-    <div className={`${Styles.bottomNav}`}>
-      <div className={`${Styles.bnTab}`}>
+    <div className={styles.navbar}>
+      <div className={styles.tabContainer}>
         <Link href="/support">
           {activeTabs === 'support' ? (
-            <Image
-              src={supportActive}
-              alt="supportIconActive"
-              onClick={() => setActiveTabs('support')}
-            />
+            <div className={styles.tab}>
+              <Image
+                src={supportActive}
+                alt="supportIconActive"
+                onClick={() => setActiveTabs('support')}
+              />
+              <p className={styles.active}>Support</p>
+            </div>
           ) : (
-            <Image
-              src={support}
-              alt="supportIcon"
-              onClick={() => setActiveTabs('support')}
-            />
+            <div className={styles.tab}>
+              <Image
+                src={support}
+                alt="supportIcon"
+                onClick={() => setActiveTabs('support')}
+              />
+              <p className={styles.normal}>Support</p>
+            </div>
           )}
         </Link>
       </div>
-      <div className={`${Styles.bnTab}`}>
+      <div className={`${styles.tabContainer}`}>
         <Link href="/profile">
           {activeTabs === 'profile' ? (
-            <Image
-              src={profileActive}
-              alt="profileIconActive"
-              onClick={() => setActiveTabs('profile')}
-            />
+            <div className={styles.tab}>
+              <Image
+                src={profileActive}
+                alt="profileIconActive"
+                onClick={() => setActiveTabs('profile')}
+              />
+              <p className={styles.active}>Profile</p>
+            </div>
           ) : (
-            <Image
-              src={profile}
-              alt="profileIcon"
-              onClick={() => setActiveTabs('profile')}
-            />
+            <div className={styles.tab}>
+              <Image
+                src={profile}
+                alt="profileIcon"
+                onClick={() => setActiveTabs('profile')}
+              />
+              <p className={styles.normal}>Profile</p>
+            </div>
           )}
         </Link>
       </div>
