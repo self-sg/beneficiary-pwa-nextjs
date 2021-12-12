@@ -17,7 +17,7 @@ export default function Support() {
   return (
     <div className={styles.container}>
       {}
-      <TopNav pageName={'Support'} displayBackButton={true} />
+      <TopNav pageName={'Support'} displayBackButton={false} />
 
       <div className="flex-row">
         {dummy_category_data.map((category) => (
