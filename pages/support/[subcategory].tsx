@@ -56,27 +56,30 @@ export default function Support() {
 
   useEffect(() => {
     if (router.isReady) type = router.asPath.split('/')[2]
-    category_dict[`${type}`] == null
-      ? console.log(
-          'error in [subcategory].tsx: category_ref state is not updated correctly as category type does not exist.'
-        )
-      : set_category_ref(category_dict[`${type}`])
+    set_category_ref(category_dict[`${type}`])
 
     set_filtered_subcat_list(
       subcat_list.filter((subcat) => subcat.type === type)
     )
   }, [router.isReady])
 
-  return (
-    <div className={styles.container}>
-      {}
-      <TopNav pageName={'Support Subcategory'} displayBackButton={true} />
-      <Image src={category_ref[0]} />
-      <h4>{category_ref[1]}</h4> {/*  TODO: change weight to semibold */}
-      {filtered_subcat_list.map((subcat) => (
-        <SubCategory style={subcat.style} text={subcat.text} />
-      ))}
-      <BottomNav name="support" />
-    </div>
-  )
+  if (category_ref == null) {
+    console.log(
+      'error in [subcategory].tsx: category_ref is undefined as category type does not exist.'
+    )
+    return null
+  } else {
+    return (
+      <div className={styles.container}>
+        {}
+        <TopNav pageName={'Support Subcategory'} displayBackButton={true} />
+        <Image src={category_ref[0]} />
+        <h4>{category_ref[1]}</h4> {/*  TODO: change weight to semibold */}
+        {filtered_subcat_list.map((subcat) => (
+          <SubCategory style={subcat.style} text={subcat.text} />
+        ))}
+        <BottomNav name="support" />
+      </div>
+    )
+  }
 }

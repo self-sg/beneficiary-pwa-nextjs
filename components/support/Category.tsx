@@ -26,21 +26,23 @@ const category_dict = {
 
 export default function Category(props: Props) {
   const type = props.type
-  const category_ref =
-    category_dict[`${type}`] == null
-      ? console.log(
-          'error in Category.tsx: category_ref is undefined as category type does not exist.'
-        )
-      : category_dict[`${type}`]
+  const category_ref = category_dict[`${type}`]
 
-  return (
-    <div>
-      <Link href={`/support/${type}`}>
-        <div>
-          <Image src={category_ref[0]} />
-          <p className="text-body-main">{category_ref[1]}</p>
-        </div>
-      </Link>
-    </div>
-  )
+  if (category_ref == null) {
+    console.log(
+      'error in Category.tsx: category_ref is undefined as category type does not exist.'
+    )
+    return null
+  } else {
+    return (
+      <div>
+        <Link href={`/support/${type}`}>
+          <div>
+            <Image src={category_ref[0]} />
+            <p className="text-body-main">{category_ref[1]}</p>
+          </div>
+        </Link>
+      </div>
+    )
+  }
 }

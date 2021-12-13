@@ -51,12 +51,19 @@ const image_dict = {
 }
 
 export default function SubCategory(props: Props) {
-  return (
-    <div className={`${styles[props.style]}`}>
-      <Image src={image_dict[`${props.style}`]} />
-      <div className={styles.centered}>
-        <p className="text-body-main">{props.text}</p>
+  if (image_dict[`${props.style}`] == null) {
+    console.log(
+      'error in SubCategory.tsx: image_dict[`${props.style}`] is undefined as style prop does not exist as a key in image_dict.'
+    )
+    return null
+  } else {
+    return (
+      <div className={`${styles[props.style]}`}>
+        <Image src={image_dict[`${props.style}`]} />
+        <div className={styles.centered}>
+          <p className="text-body-main">{props.text}</p>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 }
