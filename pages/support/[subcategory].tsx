@@ -72,7 +72,11 @@ export default function Support() {
     return (
       <div className={styles.container}>
         {}
-        <TopNav pageName={'Support Subcategory'} displayBackButton={true} />
+        <TopNav
+          pageName={'Support'}
+          displayBackButton={true}
+          displayFilter={true}
+        />
         <Image src={category_ref[0]} />
         <h4>{category_ref[1]}</h4> {/*  TODO: change weight to semibold */}
         {filtered_subcat_list.map((subcat) => (
