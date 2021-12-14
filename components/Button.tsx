@@ -2,8 +2,9 @@ import styles from '../styles/Button.module.css'
 
 interface Props {
   type: string
-  size: string
+  size?: string
   text: string
+  clickHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export default function Button(props: Props) {
@@ -14,7 +15,7 @@ export default function Button(props: Props) {
     textClassName = 'text-m-r'
   }
   return (
-    <button className={`${styles[props.type]}`}>
+    <button className={`${styles[props.type]}`} onClick={props.clickHandler}>
       <span className={textClassName}>{props.text}</span>
     </button>
   )
