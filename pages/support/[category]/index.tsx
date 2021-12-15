@@ -4,7 +4,8 @@ import styles from '../../../styles/Page.module.css'
 import TopNav from '../../../components/TopNav'
 =======
 import BottomNav from '../../components/BottomNav'
-import styles from '../../styles/Page.module.css'
+import pageStyles from '../../styles/Page.module.css'
+import styles from '../../styles/SubCategory.module.css'
 import TopNav from '../../components/TopNav'
 >>>>>>> 23b09a3... add reusable styles for page container:pages/support/[subcategory].tsx
 import { useRouter } from 'next/router'
@@ -76,7 +77,7 @@ export default function Support() {
     return null
   } else {
     return (
-      <div className={styles.container24}>
+      <div className={pageStyles.container24}>
         {}
         <TopNav
           pageName={'Support'}
@@ -84,7 +85,7 @@ export default function Support() {
           displayFilter={true}
         />
         <Image src={category_ref[0]} />
-        <h4>{category_ref[1]}</h4> {/*  TODO: change weight to semibold */}
+        <span className={styles.text}>{category_ref[1]}</span>
         {filtered_subcat_list.map((subcat) => (
           <SubCategory
             type={subcat.type}

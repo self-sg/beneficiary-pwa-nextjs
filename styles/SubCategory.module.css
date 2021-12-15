@@ -5,6 +5,7 @@
   border-radius: 8px;
   overflow: hidden;
   height: 100px;
+  margin-bottom: 16px;
 }
 
 .container::before {
@@ -192,4 +193,12 @@
   width: 80%;
   transform: translate(-50%, -50%);
   z-index: 2;
+}
+
+.text {
+  font-family: 'Poppins', sans-serif;
+  font-size: var(--fs-20);
+  font-weight: var(--fw-semibold);
+  margin-top: 8px;
+  margin-bottom: 24px;
 }
