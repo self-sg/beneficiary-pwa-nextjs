@@ -70,7 +70,7 @@ export default function Support() {
     return null
   } else {
     return (
-      <div className={styles.container}>
+      <div className={styles.container24}>
         {}
         <TopNav
           pageName={'Support'}
