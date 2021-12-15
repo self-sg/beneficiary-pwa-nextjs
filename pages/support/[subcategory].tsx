@@ -1,5 +1,5 @@
 import BottomNav from '../../components/BottomNav'
-import styles from '../../styles/Home.module.css'
+import styles from '../../styles/Page.module.css'
 import TopNav from '../../components/TopNav'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
