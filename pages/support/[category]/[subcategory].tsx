@@ -7,7 +7,6 @@ export default function SupportListing() {
   const router = useRouter()
   let category = router.asPath.split('/')[2]
   category = category.charAt(0).toUpperCase() + category.slice(1)
-  console.log(category)
 
   return (
     <div className={styles.container}>
