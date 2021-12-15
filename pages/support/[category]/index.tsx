@@ -57,7 +57,6 @@ export default function Support() {
 
   useEffect(() => {
     if (router.isReady) type = router.asPath.split('/')[2]
-    console.log(router)
     set_category_ref(category_dict[`${type}`])
 
     set_filtered_subcat_list(
