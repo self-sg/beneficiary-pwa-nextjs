@@ -18,7 +18,8 @@ a {
   font-family: 'Poppins';
   font-style: bold;
   font-weight: 700;
-  src: local('Poppins'), url(/public/fonts/Poppins-Bold.tff) format('truetype');
+  src: local('Poppins'),
+    url(../public/fonts/Poppins-Bold.ttf) format('truetype');
 }
 
 @font-face {
@@ -26,7 +27,7 @@ a {
   font-style: semibold;
   font-weight: 600;
   src: local('Poppins'),
-    url(/public/fonts/Poppins-Semibold.ttf) format('truetype');
+    url(../public/fonts/Poppins-SemiBold.ttf) format('truetype');
 }
 
 @font-face {
@@ -34,7 +35,7 @@ a {
   font-style: medium;
   font-weight: 500;
   src: local('Poppins'),
-    url(/public/fonts/Poppins-Medium.ttf) format('truetype');
+    url(../public/fonts/Poppins-Medium.ttf) format('truetype');
 }
 
 @font-face {
@@ -42,14 +43,15 @@ a {
   font-style: regular;
   font-weight: 400;
   src: local('Poppins'),
-    url(/public/fonts/Poppins-Regular.tff) format('truetype');
+    url(../public/fonts/Poppins-Regular.ttf) format('truetype');
 }
 
 @font-face {
   font-family: 'Roboto';
   font-style: regular;
   font-weight: 400;
-  src: local('Roboto'), url(/public/fonts/Roboto-Regular.tff) format('truetype');
+  src: local('Roboto'),
+    url(../public/fonts/Roboto-Regular.ttf) format('truetype');
 }
 
 :root {
