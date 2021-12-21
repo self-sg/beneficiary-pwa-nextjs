@@ -20,10 +20,12 @@ import schoolsearching from '../../public/assets/images/children-education/schoo
 import freelegalclinic from '../../public/assets/images/legal/freelegalclinic.png'
 import childrights from '../../public/assets/images/legal/childrights.png'
 import employmentrights from '../../public/assets/images/legal/employmentrights.png'
+import Link from 'next/link'
 
 interface Props {
   style: string
   text: string
+  type: string
   clickHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
@@ -51,6 +53,11 @@ const image_dict = {
 }
 
 export default function SubCategory(props: Props) {
+  const subcat_route = props.text
+    .toLowerCase()
+    .replace('& ', '') // handles 'Career Guidance & Coaching'
+    .replace(/[^a-zA-Z]/g, '-')
+
   if (image_dict[`${props.style}`] == null) {
     console.log(
       'error in SubCategory.tsx: image_dict[`${props.style}`] is undefined as style prop does not exist as a key in image_dict.'
@@ -58,12 +65,14 @@ export default function SubCategory(props: Props) {
     return null
   } else {
     return (
-      <div className={`${styles[props.style]}`}>
-        <Image src={image_dict[`${props.style}`]} />
-        <div className={styles.centered}>
-          <p className="text-body-main">{props.text}</p>
+      <Link href={`/support/${props.type}/${subcat_route}`}>
+        <div className={`${styles[props.style]}`}>
+          <Image src={image_dict[`${props.style}`]} />
+          <div className={styles.centered}>
+            <p className="text-body-main">{props.text}</p>
+          </div>
         </div>
-      </div>
+      </Link>
     )
   }
 }

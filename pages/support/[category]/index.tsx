@@ -1,17 +1,17 @@
-import BottomNav from '../../components/BottomNav'
-import styles from '../../styles/Page.module.css'
-import TopNav from '../../components/TopNav'
+import BottomNav from '../../../components/BottomNav'
+import styles from '../../../styles/Page.module.css'
+import TopNav from '../../../components/TopNav'
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
-import career from '../../public/assets/category/career.svg'
-import healthcare from '../../public/assets/category/healthcare.svg'
-import financial from '../../public/assets/category/financial.svg'
-import self from '../../public/assets/category/selfdevelopment.svg'
-import family from '../../public/assets/category/family.svg'
-import children from '../../public/assets/category/childeducation.svg'
-import legal from '../../public/assets/category/legal.svg'
-import SubCategory from '../../components/support/SubCategory'
+import career from '../../../public/assets/category/career.svg'
+import healthcare from '../../../public/assets/category/healthcare.svg'
+import financial from '../../../public/assets/category/financial.svg'
+import self from '../../../public/assets/category/selfdevelopment.svg'
+import family from '../../../public/assets/category/family.svg'
+import children from '../../../public/assets/category/childeducation.svg'
+import legal from '../../../public/assets/category/legal.svg'
+import SubCategory from '../../../components/support/SubCategory'
 
 export default function Support() {
   const [category_ref, set_category_ref] = useState([career, 'Career']) // set default values for prerendering
@@ -80,7 +80,11 @@ export default function Support() {
         <Image src={category_ref[0]} />
         <h4>{category_ref[1]}</h4> {/*  TODO: change weight to semibold */}
         {filtered_subcat_list.map((subcat) => (
-          <SubCategory style={subcat.style} text={subcat.text} />
+          <SubCategory
+            type={subcat.type}
+            style={subcat.style}
+            text={subcat.text}
+          />
         ))}
         <BottomNav featureName="support" />
       </div>
