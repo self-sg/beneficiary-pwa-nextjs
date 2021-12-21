@@ -1,13 +1,7 @@
-<<<<<<< HEAD:pages/support/[category]/index.tsx
 import BottomNav from '../../../components/BottomNav'
-import styles from '../../../styles/Page.module.css'
+import pageStyles from '../../../styles/Page.module.css'
+import styles from '../../../styles/SubCategory.module.css'
 import TopNav from '../../../components/TopNav'
-=======
-import BottomNav from '../../components/BottomNav'
-import pageStyles from '../../styles/Page.module.css'
-import styles from '../../styles/SubCategory.module.css'
-import TopNav from '../../components/TopNav'
->>>>>>> 23b09a3... add reusable styles for page container:pages/support/[subcategory].tsx
 import { useRouter } from 'next/router'
 import { useState, useEffect } from 'react'
 import Image from 'next/image'
