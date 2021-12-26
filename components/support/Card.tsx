@@ -6,13 +6,13 @@ import Image from 'next/image'
 import { useState } from 'react'
 
 interface Props {
-  displayStar: boolean
   data: { [key: string]: string }
   clickHandler?: (event: React.MouseEvent<HTMLButtonElement>) => void
 }
 
 export default function Card(props: Props) {
-  const [liked, setLiked] = useState(true)
+  const [liked, setLiked] = useState(true) // TODO: think of where this data should come from
+  const [displayStar, setDisplayStar] = useState(true) // retrieved from auth state
   const data = props.data
 
   return (
@@ -22,7 +22,7 @@ export default function Card(props: Props) {
           <span className="text-m-sb">{data.title}</span>
         </div>
         <div className={styles.starContainer}>
-          {props.displayStar ? (
+          {displayStar ? (
             liked ? (
               <Image src={star_filled} onClick={() => setLiked(false)} />
             ) : (

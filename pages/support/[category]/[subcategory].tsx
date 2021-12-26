@@ -51,7 +51,7 @@ export default function SupportListing() {
         <span className="text-body-main">{subcategory}</span>
       </div>
       {support_listing.map((support_item) => (
-        <Card displayStar={true} data={support_item} />
+        <Card data={support_item} />
       ))}
 
       <BottomNav featureName="support" />
