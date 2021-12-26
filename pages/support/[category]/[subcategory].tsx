@@ -6,6 +6,29 @@ import Card from '../../../components/support/Card'
 import { useRouter } from 'next/router'
 
 export default function SupportListing() {
+  const support_listing = [
+    {
+      title:
+        'Help families in need take a break from caregiving duties, 6-10pm every weeknight',
+      organisation: 'Morning Star Community Services',
+      region: 'Central, West, East',
+      type: 'Childcare'
+    },
+    {
+      title:
+        'More financial assistance for Childcare fees on top of basic and additional subsidies',
+      organisation: 'Ministry of Social Family & Development (MSF)',
+      region: 'Central, West, East, North, South',
+      type: 'Childcare'
+    },
+    {
+      title:
+        'Help families in need take a break from caregiving duties, 6-10pm every weeknight',
+      organisation: 'Morning Star Community Services',
+      region: 'Central, West, East',
+      type: 'Childcare'
+    }
+  ]
   const router = useRouter()
   let category = router.asPath.split('/')[2]
   category = category.charAt(0).toUpperCase() + category.slice(1)
@@ -27,7 +50,10 @@ export default function SupportListing() {
       <div className={styles.alignment}>
         <span className="text-body-main">{subcategory}</span>
       </div>
-      <Card displayStar={true} />
+      {support_listing.map((support_item) => (
+        <Card displayStar={true} data={support_item} />
+      ))}
+
       <BottomNav featureName="support" />
     </div>
   )
