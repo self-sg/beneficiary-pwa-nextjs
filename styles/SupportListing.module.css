@@ -1,0 +1,6 @@
+.alignment {
+  align-self: flex-start;
+  margin-left: 24px;
+  margin-bottom: 16px;
+  text-transform: capitalize;
+}
