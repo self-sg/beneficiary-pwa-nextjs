@@ -33,3 +33,28 @@
   justify-content: space-between;
   align-items: center;
 }
+
+.filterWrapper {
+  position: relative;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.count {
+  position: absolute;
+  top: -7px;
+  left: 12px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 14px;
+  width: 14px;
+  border-radius: 50%;
+
+  color: var(--accent-white);
+  background-color: var(--accent-primary);
+  font-size: 7px;
+
+  z-index: 3;
+}

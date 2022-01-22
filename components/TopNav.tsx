@@ -38,11 +38,14 @@ export default function TopNav(props: Props) {
           <p className="text-caption">{props.pageName}</p>
 
           {props.displayFilter ? (
-            <Image
-              src={filter}
-              alt="filterIcon"
-              onClick={() => console.log('Open filter modal')}
-            />
+            <div className={styles.filterWrapper}>
+              <Image
+                src={filter}
+                alt="filterIcon"
+                onClick={() => console.log('Open filter modal')}
+              />
+              <span className={styles.count}>1</span>
+            </div>
           ) : undefined}
         </div>
       </div>

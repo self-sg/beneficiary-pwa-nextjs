@@ -1,6 +1,8 @@
 import BottomNav from '../../components/BottomNav'
-import styles from '../../styles/Page.module.css'
+import pageStyles from '../../styles/Page.module.css'
+import styles from '../../styles/Category.module.css'
 import TopNav from '../../components/TopNav'
+import FilterBar from '../../components/support/FilterBar'
 import Category from '../../components/support/Category'
 
 export default function Support() {
@@ -15,11 +17,11 @@ export default function Support() {
     { type: 'legal', count: 70 }
   ]
   return (
-    <div className={styles.container}>
+    <div className={pageStyles.container}>
       {}
       <TopNav pageName={'Support'} displayBackButton={false} />
-
-      <div className="flex-row">
+      <FilterBar />
+      <div className={styles.container}>
         {dummy_category_data.map((category) => (
           <Category type={category.type} count={category.count} />
         ))}
