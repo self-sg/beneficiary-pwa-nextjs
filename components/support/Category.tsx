@@ -1,4 +1,5 @@
 import Image from 'next/image'
+import styles from '../../styles/Category.module.css'
 import career from '../../public/assets/category/career.svg'
 import healthcare from '../../public/assets/category/healthcare.svg'
 import financial from '../../public/assets/category/financial.svg'
@@ -26,6 +27,7 @@ const category_dict = {
 
 export default function Category(props: Props) {
   const type = props.type
+  const count = props.count
   const category_ref = category_dict[`${type}`]
 
   if (category_ref == null) {
@@ -37,9 +39,10 @@ export default function Category(props: Props) {
     return (
       <div>
         <Link href={`/support/${type}`}>
-          <div>
+          <div className={styles.categoryContainer}>
             <Image src={category_ref[0]} />
-            <p className="text-body-main">{category_ref[1]}</p>
+            <p className="text-body-caption">{category_ref[1]}</p>
+            <span className={styles.count}>{count}</span>
           </div>
         </Link>
       </div>

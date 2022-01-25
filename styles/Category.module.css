@@ -1,0 +1,36 @@
+.container {
+  width: 100%;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(100px, 1fr));
+  grid-row-gap: 50px;
+}
+
+.categoryContainer {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin: auto;
+
+  width: 100px;
+  height: 139px;
+}
+
+.count {
+  position: absolute;
+  top: -28px;
+  right: 0px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 40px;
+  width: 40px;
+  border-radius: 50%;
+
+  color: var(--accent-primary);
+  background-color: var(--accent-active);
+  font-size: var(--fs-14);
+
+  z-index: -1;
+}
