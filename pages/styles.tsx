@@ -27,6 +27,7 @@ export default function Styles() {
         <ColorSwatch colorName="Font" colorVar="var(--accent-font)" />
         <ColorSwatch colorName="Black" colorVar="var(--accent-black)" />
         <ColorSwatch colorName="White" colorVar="var(--accent-White)" />
+        <ColorSwatch colorName="Offwhite" colorVar="var(--accent-offwhite)" />
         <ColorSwatch colorName="Link" colorVar="var(--accent-link)" />
         <ColorSwatch colorName="Disabled" colorVar="var(--accent-disabled)" />
         <ColorSwatch colorName="Success" colorVar="var(--accent-success)" />

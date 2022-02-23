@@ -15,7 +15,11 @@
 
 .secondary {
   composes: button;
-  background-color: var(--accent-white);
+  background-color: var(--accent-offwhite);
   color: var(--accent-label);
-  border: 1px solid var(--accent-label);
+  /* border: 1px solid var(--accent-label); */
+}
+
+.buttonText {
+  line-height: 0;
 }
