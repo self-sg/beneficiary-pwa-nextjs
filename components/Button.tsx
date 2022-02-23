@@ -11,12 +11,14 @@ export default function Button(props: Props) {
   let textClassName = ''
   if (props.type === 'primary') {
     textClassName = 'text-m-sb'
-  } else {
+  } else if (props.type === 'secondary') {
     textClassName = 'text-m-r'
   }
   return (
     <button className={`${styles[props.type]}`} onClick={props.clickHandler}>
-      <span className={textClassName}>{props.text}</span>
+      <span className={`${textClassName} ${styles.buttonText}`}>
+        {props.text}
+      </span>
     </button>
   )
 }
