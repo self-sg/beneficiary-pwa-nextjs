@@ -1,0 +1,29 @@
+.pageWrapper {
+  height: 100vh;
+  background-color: #f2b3be;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 5%;
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+  text-align: center;
+  min-height: 560px;
+  height: 75%;
+}
+
+.contentTop {
+  height: 450px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.textContainer {
+  max-width: 500px;
+}
