@@ -19,3 +19,14 @@
   color: var(--accent-label);
   border: 1px solid var(--accent-label);
 }
+
+.saveActive {
+  composes: primary; 
+  width: 100vw;
+}
+
+.saveDisabled {
+  composes: primary; 
+  width: 100vw;
+  background-color: var(--accent-disabled);
+}
