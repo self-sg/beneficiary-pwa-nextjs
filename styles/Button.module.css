@@ -23,3 +23,14 @@
 .buttonText {
   line-height: 0;
 }
+
+.saveActive {
+  composes: primary; 
+  width: 100vw;
+}
+
+.saveDisabled {
+  composes: primary; 
+  width: 100vw;
+  background-color: var(--accent-disabled);
+}
