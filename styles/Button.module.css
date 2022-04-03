@@ -25,12 +25,12 @@
 }
 
 .saveActive {
-  composes: primary; 
+  composes: primary;
   width: 100vw;
 }
 
 .saveDisabled {
-  composes: primary; 
+  composes: primary;
   width: 100vw;
   background-color: var(--accent-disabled);
 }
