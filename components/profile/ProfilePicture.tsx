@@ -5,7 +5,11 @@ export default function ProfilePicture({ selectedPhoto }) {
   if (selectedPhoto) {
     return (
       <div className={profileStyles.profilePictureBubble}>
-        <img alt="profile picture" src={URL.createObjectURL(selectedPhoto)} className={profileStyles.profilePicture} />
+        <img
+          alt="profile picture"
+          src={URL.createObjectURL(selectedPhoto)}
+          className={profileStyles.profilePicture}
+        />
       </div>
     )
   } else {

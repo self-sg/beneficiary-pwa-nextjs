@@ -30,7 +30,7 @@ const menuButtonsDict = [
 ]
 
 export default function Profile() {
-  // TODO: fetch this data from backend instead 
+  // TODO: fetch this data from backend instead
   const [name, setName] = useState('Rachel Tan')
   const [phoneNumber, setPhoneNumber] = useState('9128 3271')
   const [email, setEmail] = useState('racheltan@gmail.com')
@@ -50,11 +50,11 @@ export default function Profile() {
       <div className={profileStyles.menuContainer}>
         {menuButtonsDict.map((menuButtonInfo, index) => {
           return (
-            <MenuButton 
-              imgSrc={menuButtonInfo[0]} 
-              buttonText={menuButtonInfo[1]} 
-              urlSlug={menuButtonInfo[2]} 
-              buttonStyle={menuButtonInfo[3]} 
+            <MenuButton
+              imgSrc={menuButtonInfo[0]}
+              buttonText={menuButtonInfo[1]}
+              urlSlug={menuButtonInfo[2]}
+              buttonStyle={menuButtonInfo[3]}
             />
           )
         })}
