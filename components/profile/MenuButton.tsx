@@ -7,7 +7,6 @@ interface Props {
     imgSrc: string
     urlSlug: string
     buttonStyle: string
-    additionalProps ?: any 
 }
 
 export default function MenuButton(props: Props) {
@@ -15,9 +14,6 @@ export default function MenuButton(props: Props) {
     <div>
       <Link href={{ 
         pathname: `/profile/${props.urlSlug}`,
-        query: {
-          userState: props.additionalProps
-        }
       }}
       >
         <div className={styles[props.buttonStyle]}>

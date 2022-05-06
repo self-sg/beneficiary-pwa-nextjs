@@ -13,7 +13,7 @@ import logout from '../../public/assets/icon/logout.svg'
 import ProfilePicture from '../../components/profile/ProfilePicture'
 import React, { useState } from "react";
 
-// TO-DO: logout and share app needs to be handled differently from the other buttons
+// TODO: logout and share app needs to be handled differently from the other buttons
 const menuButtonsDict = [
   [star, 'Saved Support', 'saved-support', 'block-button-container'],
   [share, 'Share this App', 'share-this-app', 'block-button-container'],
@@ -25,7 +25,7 @@ const menuButtonsDict = [
 ]
 
 export default function Profile() {
-  // dummy data
+  // TODO: fetch this data from backend instead 
   const [name, setName] = useState('Rachel Tan')
   const [phoneNumber, setPhoneNumber] = useState('9128 3271')
   const [email, setEmail] = useState('racheltan@gmail.com')
@@ -35,14 +35,21 @@ export default function Profile() {
     <div className={styles.container}>
       <TopNav pageName={'My Profile'} displayBackButton={false} />
       <div className={profileStyles.infoContainer}>
-        <ProfilePicture selectedPhoto={false}/>
+        <ProfilePicture selectedPhoto={profilePhoto}/>
         <h3 className={profileStyles.name}>{name}</h3>
         <p className={`text-s ${profileStyles.contactDetails}`}>{phoneNumber}</p>
         <p className={`text-s ${profileStyles.contactDetails}`}>{email}</p>
       </div>
       <div className={profileStyles.menuContainer}>
         {menuButtonsDict.map((menuButtonInfo, index) => {
-          return <MenuButton imgSrc={menuButtonInfo[0]} buttonText={menuButtonInfo[1]} urlSlug={menuButtonInfo[2]} buttonStyle={menuButtonInfo[3]} />
+          return (
+            <MenuButton 
+              imgSrc={menuButtonInfo[0]} 
+              buttonText={menuButtonInfo[1]} 
+              urlSlug={menuButtonInfo[2]} 
+              buttonStyle={menuButtonInfo[3]} 
+            />
+          )
         })}
       </div>
       <BottomNav featureName="profile" />
