@@ -1,136 +1,135 @@
-/* Profile Page Styles */ 
+/* Profile Page Styles */
 
 .block-button-container {
-    position: relative;
-    display: flex;
-    width: 45vw;
-    flex-direction: column;
-    margin: 12px 0px;
-    height: 120px; 
-    align-items: center;
-    justify-content: center;
-    color: var(--accent-primary);
-    gap: 10%;
-    box-shadow: 10px;
-    border-radius: 8px;
-    box-shadow: 5px 5px 10px #dadada;
+  position: relative;
+  display: flex;
+  width: 45vw;
+  flex-direction: column;
+  margin: 12px 0px;
+  height: 120px;
+  align-items: center;
+  justify-content: center;
+  color: var(--accent-primary);
+  gap: 10%;
+  box-shadow: 10px;
+  border-radius: 8px;
+  box-shadow: 5px 5px 10px #dadada;
 }
 
 .slim-button-container {
-    position: relative;
-    display: flex;
-    flex-direction: row;
-    width: 100vw;
-    align-items: center;
-    column-gap: 0.5em;
-    padding: 6px 15px;
+  position: relative;
+  display: flex;
+  flex-direction: row;
+  width: 100vw;
+  align-items: center;
+  column-gap: 0.5em;
+  padding: 6px 15px;
 }
 
 .image {
-    display: flex;
-    align-items: center;
+  display: flex;
+  align-items: center;
 }
 
 .menuContainer {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: space-evenly;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px; 
-    row-gap: 0.3em; 
-
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+  border-top-left-radius: 20px;
+  border-top-right-radius: 20px;
+  row-gap: 0.3em;
 }
 
 .infoContainer {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    width: 100vw;
-    text-align: center;
-    background-color: var(--accent-secondary);
-    padding: 12px;
-} 
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  text-align: center;
+  background-color: var(--accent-secondary);
+  padding: 12px;
+}
 
 .name {
-    margin-top: 8px;
-    margin-bottom: 5px;
+  margin-top: 8px;
+  margin-bottom: 5px;
 }
 
 .contactDetails {
-    margin: 2px;
+  margin: 2px;
 }
 
 .profilePictureBubble {
-    height: 110px;
-    width: 110px;
-    border-radius: 50%;
-    background-color: #d3d3d3;
-    margin: 10px;
+  height: 110px;
+  width: 110px;
+  border-radius: 50%;
+  background-color: #d3d3d3;
+  margin: 10px;
 }
 
 /* Edit Account Profile Page Styles */
 
 .uploadPhotoContainer {
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    width: 100vw;
-    text-align: center;
-    padding: 12px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100vw;
+  text-align: center;
+  padding: 12px;
 }
 
 .uploadPhotoButton {
-    border: none;
-    background: none;
-    text-decoration: underline;
+  border: none;
+  background: none;
+  text-decoration: underline;
 }
 
 .profilePicture {
-    display:inline-block;
-    height: 110px;
-    width: 110px;
-    border-radius: 50%;
+  display: inline-block;
+  height: 110px;
+  width: 110px;
+  border-radius: 50%;
 }
 
 .formField {
-    display: flex;
-    flex-direction: column; 
-    width: 100vw;
-    padding: 8px 16px;
+  display: flex;
+  flex-direction: column;
+  width: 100vw;
+  padding: 8px 16px;
 }
 
 .formContainer {
-    display: flex;
-    flex-direction: column; 
-    padding: 12px;
-    justify-content: center;
-    align-items: center;
+  display: flex;
+  flex-direction: column;
+  padding: 12px;
+  justify-content: center;
+  align-items: center;
 }
 
 .inputBox {
-    border: 1px solid;
-    border-radius: 8px;
-    margin-top: 12px;
-    height: 50px;
-    padding: 12px;
-    font-family: 'Roboto';
-    font-size: 16px;
+  border: 1px solid;
+  border-radius: 8px;
+  margin-top: 12px;
+  height: 50px;
+  padding: 12px;
+  font-family: 'Roboto';
+  font-size: 16px;
 }
 
 .saveButtonContainer {
-    padding: 20px 16px;
-    display: flex;
-    width: 100vw;
+  padding: 20px 16px;
+  display: flex;
+  width: 100vw;
 }
 
 .success {
-    position: fixed;
-    top: 45px; 
-    background-color: var(--accent-success);
-    height: 7vh;
-    width: 100vw;
-    display: flex; 
-    align-items: center;
-    padding: 12px;
-    color: var(--accent-white);
+  position: fixed;
+  top: 45px;
+  background-color: var(--accent-success);
+  height: 7vh;
+  width: 100vw;
+  display: flex;
+  align-items: center;
+  padding: 12px;
+  color: var(--accent-white);
 }

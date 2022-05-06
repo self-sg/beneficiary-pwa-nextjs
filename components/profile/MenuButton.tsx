@@ -1,4 +1,4 @@
-import Image from 'next/image' 
+import Image from 'next/image'
 import Link from 'next/link'
 import styles from '../../styles/Profile.module.css'
 
@@ -17,10 +17,10 @@ export default function MenuButton(props: Props) {
       }}
       >
         <div className={styles[props.buttonStyle]}>
-            <div className={styles.image}> 
-                <Image src={props.imgSrc} />    
-            </div>
-            {props.buttonText}
+          <div className={styles.image}>
+            <Image src={props.imgSrc} />
+          </div>
+          {props.buttonText}
         </div>
       </Link>
     </div>

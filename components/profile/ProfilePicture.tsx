@@ -1,7 +1,7 @@
 import profileStyles from '../../styles/Profile.module.css'
 
-// TO-DO: need to fix styling for uploaded profile photo 
-export default function ProfilePicture({selectedPhoto}) {
+// TO-DO: need to fix styling for uploaded profile photo
+export default function ProfilePicture({ selectedPhoto }) {
   if (selectedPhoto) {
     return (
       <div className={profileStyles.profilePictureBubble}>
@@ -9,9 +9,6 @@ export default function ProfilePicture({selectedPhoto}) {
       </div>
     )
   } else {
-    return (
-      <div className={profileStyles.profilePictureBubble}>
-      </div>
-    )
+    return <div className={profileStyles.profilePictureBubble}></div>
   }
 }

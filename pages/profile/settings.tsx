@@ -1,7 +1,3 @@
 export default function Settings() {
-    return (
-      <div>
-        hello world 
-      </div>
-    )
+  return <div>hello world</div>
 }
