@@ -17,6 +17,7 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff'
 import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import Link from 'next/link'
+import { useRouter } from 'next/router'
 
 const Signup = () => {
   // const [values, setValues] = useState({
@@ -25,6 +26,7 @@ const Signup = () => {
   //   password: '',
   //   showPassword: false,
   // });
+  const router = useRouter()
 
   const handleClickShowPassword = () => {
     setValues({
@@ -52,6 +54,8 @@ const Signup = () => {
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
+      // TODO: insert backend logic for creating a new user 
+      router.push("/signup/success")
     }
   })
 
