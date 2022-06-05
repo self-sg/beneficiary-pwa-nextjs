@@ -10,7 +10,7 @@ import {
   Box
 } from '@mui/material'
 import TextField from '@mui/material/TextField'
-import Button from '@mui/material/Button'
+import { Button as MUIButton } from '@mui/material'
 import Divider from '@mui/material/Divider'
 import Visibility from '@mui/icons-material/Visibility'
 import VisibilityOff from '@mui/icons-material/VisibilityOff'
@@ -18,6 +18,7 @@ import { FcGoogle } from "react-icons/fc";
 import { BsFacebook } from "react-icons/bs";
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Button from '../../components/Button'
 
 const Signup = () => {
   // const [values, setValues] = useState({
@@ -109,17 +110,17 @@ const Signup = () => {
             <Box height={24} />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="outlined" fullWidth startIcon={<FcGoogle />} size="large" sx={{justifyContent: 'start' }}>
+            <MUIButton variant="outlined" fullWidth startIcon={<FcGoogle />} size="large" sx={{justifyContent: 'start' }}>
               Sign up with Google
-            </Button>
+            </MUIButton>
           </Grid>
           <Grid item xs={12}>
             <Box height={6} />
           </Grid>
           <Grid item xs={12}>
-            <Button variant="outlined" fullWidth startIcon={<BsFacebook />} size="large" sx={{justifyContent: 'start' }}>
+            <MUIButton variant="outlined" fullWidth startIcon={<BsFacebook />} size="large" sx={{justifyContent: 'start' }}>
               Sign up with Facebook
-            </Button>
+            </MUIButton>
           </Grid>
           <Grid item xs={12}>
             <Box height={16} />
@@ -165,7 +166,6 @@ const Signup = () => {
               error={touched.email && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               onBlur={handleBlur}
-
             />
           </Grid>
           <Grid item xs={12}>
@@ -213,9 +213,11 @@ const Signup = () => {
             <Box height={8} />
           </Grid>
           <Grid item xs={12}>
-            <Button color="primary" variant="contained" fullWidth type="submit" disabled={! isValid || ! dirty}>
-              Submit
-            </Button>
+            <Button
+              type="primary"
+              text="Submit"
+              disabled={! isValid || ! dirty}
+            />
           </Grid>
         </Grid>
       </form>
