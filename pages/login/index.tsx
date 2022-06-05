@@ -19,7 +19,7 @@ import { BsFacebook } from 'react-icons/bs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Button from '../../components/Button'
-import {auth, createUserWithEmailAndPassword} from '../../firebase'
+import {auth, signInWithEmailAndPassword} from '../../firebase'
 
 const Signup = () => {
   // const [values, setValues] = useState({
@@ -29,6 +29,16 @@ const Signup = () => {
   //   showPassword: false,
   // });
   const router = useRouter()
+
+  const signIn = (auth, email, password) => {
+    signInWithEmailAndPassword(auth, email, password)
+    .then((userCredential) => {
+      console.log(userCredential);
+    })
+    .catch((error) => {
+      console.log(error)
+    });
+  }
 
   const handleClickShowPassword = () => {
     setValues({
@@ -41,17 +51,6 @@ const Signup = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault()
-  }
-
-  const signUp = (auth, email, password) => {
-    createUserWithEmailAndPassword(auth, email, password)
-      .then((userCredential) => {
-        // Signed in
-        console.log(userCredential)
-      })
-      .catch((error) => {
-        console.log(error.message)
-      })
   }
 
   const {
@@ -70,7 +69,6 @@ const Signup = () => {
       password: 'foobar'
     },
     validationSchema: yup.object().shape({
-      name: yup.string().required('Required'),
       email: yup.string().email('Invalid email').required('Required'),
       password: yup
         .string()
@@ -80,8 +78,8 @@ const Signup = () => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
       // TODO: insert backend logic for creating a new user
-      signUp(auth, values.email, values.password)
-      router.push('/signup/success')
+      signIn(auth, values.email, values.password)
+      router.push('/support')
     }
   })
 
@@ -93,40 +91,21 @@ const Signup = () => {
     <div style={{ padding: '20px' }}>
       <form onSubmit={handleSubmit}>
         <Grid container justifyContent="center">
-          <Grid item xs={12} md={8} container justifyContent="space-between">
-            <Grid item>
-              <Typography
-                variant="h3"
-                color="#8E3D57"
-                sx={{ fontWeight: 'bold' }}
-              >
-                Empowering
-              </Typography>
-            </Grid>
-            <Grid item>
-              <Typography variant="h5" color="#8E3D57">
-                <Link href="/support">Skip</Link>
-              </Typography>
-            </Grid>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Box height={6} />
-          </Grid>
           <Grid item xs={12} md={8}>
             <Typography
               variant="h3"
               color="#8E3D57"
               sx={{ fontWeight: 'bold' }}
             >
-              Women
+              Welcome Back!
             </Typography>
           </Grid>
           <Grid item xs={12} md={8}>
-            <Box height={16} />
+            <Box height={24} />
           </Grid>
           <Grid item xs={12} md={8}>
             <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-              Sign Up
+              Login
             </Typography>
           </Grid>
           <Grid item xs={12} md={8}>
@@ -140,7 +119,7 @@ const Signup = () => {
               size="large"
               sx={{ justifyContent: 'start' }}
             >
-              Sign up with Google
+              Log in with Google
             </MUIButton>
           </Grid>
           <Grid item xs={12} md={8}>
@@ -154,7 +133,7 @@ const Signup = () => {
               size="large"
               sx={{ justifyContent: 'start' }}
             >
-              Sign up with Facebook
+              Log in with Facebook
             </MUIButton>
           </Grid>
           <Grid item xs={12} md={8}>
@@ -165,25 +144,6 @@ const Signup = () => {
           </Grid>
           <Grid item xs={12} md={8}>
             <Box height={16} />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <InputLabel>Name</InputLabel>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <TextField
-              fullWidth
-              id="name"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              error={touched.name && Boolean(errors.name)}
-              helperText={touched.name && errors.name}
-              InputLabelProps={{ shrink: true }}
-              onBlur={handleBlur}
-            />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Box height={8} />
           </Grid>
           <Grid item xs={12} md={8}>
             <InputLabel>Email</InputLabel>
@@ -239,9 +199,12 @@ const Signup = () => {
               onBlur={handleBlur}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid container item xs={12} md={8} justifyContent='space-between' >
             <Typography variant="caption" color="#8E3D57">
-              <Link href="/login">Already have an account?</Link>
+              <Link href="/signup">Don't have an account?</Link>
+            </Typography>
+            <Typography variant="caption" color="#8E3D57">
+              <Link href="/login/password-reset">Forgot password</Link>
             </Typography>
           </Grid>
           <Grid item xs={12} md={8}>
