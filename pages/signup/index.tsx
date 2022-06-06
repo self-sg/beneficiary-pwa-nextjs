@@ -19,7 +19,7 @@ import { BsFacebook } from 'react-icons/bs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Button from '../../components/Button'
-import {auth, createUserWithEmailAndPassword} from '../../firebase'
+import {auth, createUserWithEmailAndPassword, updateProfile } from '../../firebase'
 
 const Signup = () => {
   // const [values, setValues] = useState({
@@ -43,11 +43,15 @@ const Signup = () => {
     event.preventDefault()
   }
 
-  const signUp = (auth, email, password) => {
+  const signUp = (auth, email, password, name) => {
     createUserWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
         // Signed in
         console.log(userCredential)
+        const currUser = userCredential.user 
+        updateProfile(currUser, {
+          displayName: name,
+        }) 
       })
       .catch((error) => {
         console.log(error.message)
@@ -80,7 +84,7 @@ const Signup = () => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
       // TODO: insert backend logic for creating a new user
-      signUp(auth, values.email, values.password)
+      signUp(auth, values.email, values.password, values.name)
       router.push('/signup/success')
     }
   })

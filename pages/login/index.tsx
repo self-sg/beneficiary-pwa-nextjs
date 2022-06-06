@@ -204,7 +204,7 @@ const Signup = () => {
               <Link href="/signup">Don't have an account?</Link>
             </Typography>
             <Typography variant="caption" color="#8E3D57">
-              <Link href="/login/password-reset">Forgot password</Link>
+              <Link href="/login/forgot-password">Forgot password</Link>
             </Typography>
           </Grid>
           <Grid item xs={12} md={8}>

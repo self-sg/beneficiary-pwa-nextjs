@@ -12,6 +12,7 @@ import shield from '../../public/assets/icon/shield.svg'
 import logout from '../../public/assets/icon/logout.svg'
 import ProfilePicture from '../../components/profile/ProfilePicture'
 import React, { useState } from 'react'
+import { onAuthStateChanged, auth } from '../../firebase'
 
 // TODO: logout and share app needs to be handled differently from the other buttons
 const menuButtonsDict = [
@@ -31,10 +32,23 @@ const menuButtonsDict = [
 
 export default function Profile() {
   // TODO: fetch this data from backend instead
-  const [name, setName] = useState('Rachel Tan')
-  const [phoneNumber, setPhoneNumber] = useState('9128 3271')
-  const [email, setEmail] = useState('racheltan@gmail.com')
+  const [name, setName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [email, setEmail] = useState('')
   const [profilePhoto, setProfilePhoto] = useState(null)
+
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      const name = user.displayName;
+      const email = user.email; 
+      setName(name);
+      setEmail(email);
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
 
   return (
     <div className={styles.container}>
