@@ -1,5 +1,6 @@
 import { initializeApp } from "firebase/app";
-import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, updateEmail, updatePhoneNumber } from 'firebase/auth'
+import { getAuth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, updateEmail, updatePhoneNumber, 
+  getRedirectResult, signInWithRedirect, GoogleAuthProvider, FacebookAuthProvider, signOut } from 'firebase/auth'
 
 const firebaseConfig = {
   apiKey: process.env.NEXT_PUBLIC_FIREBASE_PUBLIC_API_KEY,
@@ -13,4 +14,4 @@ const firebaseConfig = {
 
 const app = initializeApp(firebaseConfig);
 const auth = getAuth(app);
-export {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, updateEmail, updatePhoneNumber }
+export {auth, createUserWithEmailAndPassword, signInWithEmailAndPassword, updateProfile, onAuthStateChanged, updateEmail, updatePhoneNumber, GoogleAuthProvider, signInWithRedirect, getRedirectResult, FacebookAuthProvider, signOut}

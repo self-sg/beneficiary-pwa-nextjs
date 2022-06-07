@@ -19,7 +19,15 @@ import { BsFacebook } from 'react-icons/bs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Button from '../../components/Button'
-import {auth, signInWithEmailAndPassword} from '../../firebase'
+import {
+  auth,
+  signInWithEmailAndPassword,
+  signInWithRedirect,
+  getRedirectResult,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  onAuthStateChanged
+} from '../../firebase'
 
 const Signup = () => {
   // const [values, setValues] = useState({
@@ -30,14 +38,26 @@ const Signup = () => {
   // });
   const router = useRouter()
 
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      console.log('user is logged in')
+      router.push('/')
+      // ...
+    } else {
+      // User is signed out
+      // ...
+      console.log('user is not logged in')
+    }
+  })
+
   const signIn = (auth, email, password) => {
     signInWithEmailAndPassword(auth, email, password)
-    .then((userCredential) => {
-      console.log(userCredential);
-    })
-    .catch((error) => {
-      console.log(error)
-    });
+      .then((userCredential) => {
+        console.log(userCredential)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
   const handleClickShowPassword = () => {
@@ -51,6 +71,47 @@ const Signup = () => {
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
     event.preventDefault()
+  }
+
+  const GoogleProvider = new GoogleAuthProvider()
+  const FacebookProvider = new FacebookAuthProvider()
+  const signInWithGoogle = () => {
+    signInWithRedirect(auth, GoogleProvider)
+    // console.log("hey wtf ")
+    getRedirectResult(auth)
+      .then((result) => {
+        // This gives you a Google Access Token. You can use it to access Google APIs.
+        const credential = GoogleAuthProvider.credentialFromResult(result)
+        const token = credential.accessToken
+
+        // The signed-in user info.
+        const user = result.user
+        console.log(credential)
+        console.log(token)
+        console.log(user)
+      })
+      .catch((error) => {
+        // Handle Errors here.
+        const errorCode = error.code
+        const errorMessage = error.message
+        // The email of the user's account used.
+        const email = error.customData.email
+        // The AuthCredential type that was used.
+        const credential = GoogleAuthProvider.credentialFromError(error)
+        // ...
+        console.log("logging erorrs...")
+        console.log(errorCode)
+        console.log(errorMessage)
+        console.log(email)
+        console.log(credential)
+      })
+
+    router.push('/')
+  }
+  const signInWithFacebook = () => {
+    signInWithRedirect(auth, FacebookProvider)
+
+    router.push('/')
   }
 
   const {
@@ -118,6 +179,7 @@ const Signup = () => {
               startIcon={<FcGoogle />}
               size="large"
               sx={{ justifyContent: 'start' }}
+              onClick={signInWithGoogle}
             >
               Log in with Google
             </MUIButton>
@@ -132,6 +194,7 @@ const Signup = () => {
               startIcon={<BsFacebook />}
               size="large"
               sx={{ justifyContent: 'start' }}
+              onClick={signInWithFacebook}
             >
               Log in with Facebook
             </MUIButton>
@@ -199,7 +262,7 @@ const Signup = () => {
               onBlur={handleBlur}
             />
           </Grid>
-          <Grid container item xs={12} md={8} justifyContent='space-between' >
+          <Grid container item xs={12} md={8} justifyContent="space-between">
             <Typography variant="caption" color="#8E3D57">
               <Link href="/signup">Don't have an account?</Link>
             </Typography>

@@ -12,43 +12,79 @@ import shield from '../../public/assets/icon/shield.svg'
 import logout from '../../public/assets/icon/logout.svg'
 import ProfilePicture from '../../components/profile/ProfilePicture'
 import React, { useState } from 'react'
-import { onAuthStateChanged, auth } from '../../firebase'
+import { onAuthStateChanged, auth, signOut } from '../../firebase'
+import { useRouter } from 'next/router'
 
-// TODO: logout and share app needs to be handled differently from the other buttons
-const menuButtonsDict = [
-  [star, 'Saved Support', 'saved-support', 'block-button-container'],
-  [share, 'Share this App', 'share-this-app', 'block-button-container'],
-  [edit, 'Edit Account Profile', 'edit-profile', 'slim-button-container'],
-  [settings, 'Settings', 'settings', 'slim-button-container'],
-  [
-    file,
-    'Terms and Conditions',
-    'terms-and-conditions',
-    'slim-button-container'
-  ],
-  [shield, 'Privacy Policy', 'privacy-policy', 'slim-button-container'],
-  [logout, 'Logout', 'logout', 'slim-button-container']
-]
-
+// TODO: handle storing of phone number 
 export default function Profile() {
-  // TODO: fetch this data from backend instead
   const [name, setName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
   const [profilePhoto, setProfilePhoto] = useState(null)
 
+  const router = useRouter()
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      const name = user.displayName;
-      const email = user.email; 
-      setName(name);
-      setEmail(email);
-      // ...
+      const name = user.displayName
+      const email = user.email
+      setName(name)
+      setEmail(email)
     } else {
-      // User is signed out
-      // ...
+      console.log("not signed in ")
     }
-  });
+  })
+
+  const menuButtonsDict = [
+    [
+      star,
+      'Saved Support',
+      'saved-support',
+      'block-button-container',
+      () => {}
+    ],
+    [
+      share,
+      'Share this App',
+      'share-this-app',
+      'block-button-container',
+      () => {}
+    ],
+    [
+      edit,
+      'Edit Account Profile',
+      'edit-profile',
+      'slim-button-container',
+      () => {router.push('/profile/edit-profile')}
+    ],
+    [settings, 'Settings', 'settings', 'slim-button-container', () => {}],
+    [
+      file,
+      'Terms and Conditions',
+      'terms-and-conditions',
+      'slim-button-container',
+      () => {}
+    ],
+    [
+      shield,
+      'Privacy Policy',
+      'privacy-policy',
+      'slim-button-container',
+      () => {}
+    ],
+    [logout, 'Logout', 'login', 'slim-button-container', () => {
+      console.log("hey")
+      signOut(auth)
+        .then(() => {
+          console.log("sign out successful")
+          router.push('/login')
+        })
+        .catch((error) => {
+          console.log("there was en error logging out")
+          console.log(error)
+        })
+    }]
+  ]
 
   return (
     <div className={styles.container}>
@@ -67,8 +103,9 @@ export default function Profile() {
             <MenuButton
               imgSrc={menuButtonInfo[0]}
               buttonText={menuButtonInfo[1]}
-              urlSlug={menuButtonInfo[2]}
+              url={menuButtonInfo[2]}
               buttonStyle={menuButtonInfo[3]}
+              onClick={menuButtonInfo[4]}
             />
           )
         })}

@@ -19,7 +19,16 @@ import { BsFacebook } from 'react-icons/bs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Button from '../../components/Button'
-import {auth, createUserWithEmailAndPassword, updateProfile } from '../../firebase'
+import {
+  auth,
+  createUserWithEmailAndPassword,
+  updateProfile,
+  signInWithRedirect,
+  getRedirectResult,
+  GoogleAuthProvider,
+  FacebookAuthProvider,
+  onAuthStateChanged
+} from '../../firebase'
 
 const Signup = () => {
   // const [values, setValues] = useState({
@@ -29,6 +38,16 @@ const Signup = () => {
   //   showPassword: false,
   // });
   const router = useRouter()
+  
+  onAuthStateChanged(auth, (user) => {
+    if (user) {
+      router.push("/")
+      // ...
+    } else {
+      // User is signed out
+      // ...
+    }
+  });
 
   const handleClickShowPassword = () => {
     setValues({
@@ -48,14 +67,73 @@ const Signup = () => {
       .then((userCredential) => {
         // Signed in
         console.log(userCredential)
-        const currUser = userCredential.user 
+        const currUser = userCredential.user
         updateProfile(currUser, {
-          displayName: name,
-        }) 
+          displayName: name
+        })
       })
       .catch((error) => {
         console.log(error.message)
       })
+  }
+
+  const GoogleProvider = new GoogleAuthProvider();
+  const FacebookProvider = new FacebookAuthProvider();
+
+  const signUpWithGoogle = () => {
+    signInWithRedirect(auth, GoogleProvider)
+
+    router.push('/signup/success')
+    // getRedirectResult(auth)
+    //   .then((result) => {
+    //     // This gives you a Google Access Token. You can use it to access Google APIs.
+    //     const credential =  GoogleAuthProvider.credentialFromResult(result)
+    //     const token = credential.accessToken
+
+    //     // The signed-in user info.
+    //     const user = result.user
+    //     console.log("hey")
+    //     console.log(user)
+    //   })
+    //   .catch((error) => {
+    //     // Handle Errors here.
+    //     const errorCode = error.code
+    //     const errorMessage = error.message
+    //     // The email of the user's account used.
+    //     const email = error.customData.email
+    //     // The AuthCredential type that was used.
+    //     const credential = GoogleAuthProvider.credentialFromError(error)
+        
+    //     console.log(error)
+    //   })
+  }
+
+  const signUpWithFacebook = () => {
+    signInWithRedirect(auth, FacebookProvider)
+
+    router.push('/signup/success')
+    // getRedirectResult(auth)
+    //   .then((result) => {
+    //     // This gives you a Google Access Token. You can use it to access Google APIs.
+    //     const credential =  GoogleAuthProvider.credentialFromResult(result)
+    //     const token = credential.accessToken
+
+    //     // The signed-in user info.
+    //     const user = result.user
+    //     console.log("hey")
+    //     console.log(user)
+    //   })
+    //   .catch((error) => {
+    //     // Handle Errors here.
+    //     const errorCode = error.code
+    //     const errorMessage = error.message
+    //     // The email of the user's account used.
+    //     const email = error.customData.email
+    //     // The AuthCredential type that was used.
+    //     const credential = GoogleAuthProvider.credentialFromError(error)
+        
+    //     console.log(error)
+    //   })
   }
 
   const {
@@ -143,6 +221,7 @@ const Signup = () => {
               startIcon={<FcGoogle />}
               size="large"
               sx={{ justifyContent: 'start' }}
+              onClick={signUpWithGoogle}
             >
               Sign up with Google
             </MUIButton>
@@ -157,6 +236,7 @@ const Signup = () => {
               startIcon={<BsFacebook />}
               size="large"
               sx={{ justifyContent: 'start' }}
+              onClick={signUpWithFacebook}
             >
               Sign up with Facebook
             </MUIButton>
