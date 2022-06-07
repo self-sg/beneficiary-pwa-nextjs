@@ -7,7 +7,8 @@ import {
   InputAdornment,
   Typography,
   InputLabel,
-  Box
+  Box,
+  makeStyles
 } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { Button as MUIButton } from '@mui/material'
@@ -30,31 +31,23 @@ import {
   onAuthStateChanged
 } from '../../firebase'
 
+// TODO: Refactor all forms (login, signup, edit-profile) into GenericForm to reduce code duplication
+// TODO: Standardize styles 
 const Signup = () => {
-  // const [values, setValues] = useState({
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  //   showPassword: false,
-  // });
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter()
-  
+
   onAuthStateChanged(auth, (user) => {
     if (user) {
-      router.push("/")
+      console.log('user is logged in')
+      router.push('/')
       // ...
     } else {
       // User is signed out
       // ...
+      console.log('user is not logged in')
     }
-  });
-
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword
-    })
-  }
+  })
 
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
@@ -77,8 +70,8 @@ const Signup = () => {
       })
   }
 
-  const GoogleProvider = new GoogleAuthProvider();
-  const FacebookProvider = new FacebookAuthProvider();
+  const GoogleProvider = new GoogleAuthProvider()
+  const FacebookProvider = new FacebookAuthProvider()
 
   const signUpWithGoogle = () => {
     signInWithRedirect(auth, GoogleProvider)
@@ -103,7 +96,7 @@ const Signup = () => {
     //     const email = error.customData.email
     //     // The AuthCredential type that was used.
     //     const credential = GoogleAuthProvider.credentialFromError(error)
-        
+
     //     console.log(error)
     //   })
   }
@@ -131,7 +124,7 @@ const Signup = () => {
     //     const email = error.customData.email
     //     // The AuthCredential type that was used.
     //     const credential = GoogleAuthProvider.credentialFromError(error)
-        
+
     //     console.log(error)
     //   })
   }
@@ -172,10 +165,10 @@ const Signup = () => {
   // console.log(errors)
 
   return (
-    <div style={{ padding: '20px' }}>
+    <div style={{ padding: '30px' }}>
       <form onSubmit={handleSubmit}>
         <Grid container justifyContent="center">
-          <Grid item xs={12} md={8} container justifyContent="space-between">
+          <Grid item xs={11} md={8} container justifyContent="space-between">
             <Grid item>
               <Typography
                 variant="h3"
@@ -191,10 +184,10 @@ const Signup = () => {
               </Typography>
             </Grid>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={6} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Typography
               variant="h3"
               color="#8E3D57"
@@ -203,57 +196,87 @@ const Signup = () => {
               Women
             </Typography>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={16} />
           </Grid>
-          <Grid item xs={12} md={8}>
-            <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+          <Grid item xs={11} md={8}>
+            <Typography variant="h4" sx={{ fontWeight: 'bold' }} color="black">
               Sign Up
             </Typography>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={24} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <MUIButton
               variant="outlined"
               fullWidth
-              startIcon={<FcGoogle />}
+              startIcon={
+                <FcGoogle style={{ marginRight: '20px' }} size="30px" />
+              }
               size="large"
-              sx={{ justifyContent: 'start' }}
+              sx={{
+                justifyContent: 'start',
+                borderColor: '#737373',
+                height: '52px',
+                textTransform: 'none',
+                color: '#737373',
+                fontSize: '16px',
+                borderRadius: '8px'
+              }}
               onClick={signUpWithGoogle}
             >
               Sign up with Google
             </MUIButton>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={6} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <MUIButton
               variant="outlined"
               fullWidth
-              startIcon={<BsFacebook />}
+              startIcon={
+                <BsFacebook
+                  style={{ color: 'blue', marginRight: '20px' }}
+                  size="30px"
+                />
+              }
               size="large"
-              sx={{ justifyContent: 'start' }}
+              sx={{
+                justifyContent: 'start',
+                borderColor: '#737373',
+                height: '52px',
+                textTransform: 'none',
+                color: '#737373',
+                fontSize: '16px',
+                borderRadius: '8px'
+              }}
               onClick={signUpWithFacebook}
             >
               Sign up with Facebook
             </MUIButton>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={16} />
           </Grid>
-          <Grid item xs={12} md={8}>
-            <Divider>OR</Divider>
+          <Grid item xs={11} md={8}>
+            <Divider sx={{ borderBottomWidth: 10 }}>
+              <Typography variant="h6" color="#737373">
+                OR
+              </Typography>
+            </Divider>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={16} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <InputLabel>Name</InputLabel>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
+            <Box height={8} />
+          </Grid>
+          <Grid item xs={11} md={8}>
             <TextField
               fullWidth
               id="name"
@@ -264,18 +287,23 @@ const Signup = () => {
               helperText={touched.name && errors.name}
               InputLabelProps={{ shrink: true }}
               onBlur={handleBlur}
+              sx={{
+                '& fieldset': {
+                  borderRadius: '8px'
+                }
+              }}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
-            <Box height={8} />
+          <Grid item xs={11} md={8}>
+            <Box height={16} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <InputLabel>Email</InputLabel>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <TextField
               fullWidth
               id="email"
@@ -285,23 +313,28 @@ const Signup = () => {
               error={touched.email && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               onBlur={handleBlur}
+              sx={{
+                '& fieldset': {
+                  borderRadius: '8px'
+                }
+              }}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
-            <Box height={8} />
+          <Grid item xs={11} md={8}>
+            <Box height={16} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <InputLabel>Password</InputLabel>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <TextField
               fullWidth
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? "text": "password"}
               value={values.password}
               onChange={handleChange}
               error={touched.password && Boolean(errors.password)}
@@ -311,27 +344,30 @@ const Signup = () => {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
+                      onClick={() => setShowPassword(! showPassword)}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                     >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 )
               }}
               onBlur={handleBlur}
+              sx={{
+                '& fieldset': {
+                  borderRadius: '8px'
+                }
+              }}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
-            <Typography variant="caption" color="#8E3D57">
-              <Link href="/login">Already have an account?</Link>
-            </Typography>
+          <Grid item xs={11} md={8}>
+            <Link href="/login">Already have an account?</Link>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Button
               type="primary"
               text="Submit"

@@ -29,13 +29,8 @@ import {
   onAuthStateChanged
 } from '../../firebase'
 
-const Signup = () => {
-  // const [values, setValues] = useState({
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  //   showPassword: false,
-  // });
+const Login = () => {
+  const [showPassword, setShowPassword] = useState(false);
   const router = useRouter()
 
   onAuthStateChanged(auth, (user) => {
@@ -60,13 +55,6 @@ const Signup = () => {
       })
   }
 
-  const handleClickShowPassword = () => {
-    setValues({
-      ...values,
-      showPassword: !values.showPassword
-    })
-  }
-
   const handleMouseDownPassword = (
     event: React.MouseEvent<HTMLButtonElement>
   ) => {
@@ -77,7 +65,6 @@ const Signup = () => {
   const FacebookProvider = new FacebookAuthProvider()
   const signInWithGoogle = () => {
     signInWithRedirect(auth, GoogleProvider)
-    // console.log("hey wtf ")
     getRedirectResult(auth)
       .then((result) => {
         // This gives you a Google Access Token. You can use it to access Google APIs.
@@ -152,7 +139,7 @@ const Signup = () => {
     <div style={{ padding: '20px' }}>
       <form onSubmit={handleSubmit}>
         <Grid container justifyContent="center">
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Typography
               variant="h3"
               color="#8E3D57"
@@ -161,18 +148,18 @@ const Signup = () => {
               Welcome Back!
             </Typography>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={24} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
               Login
             </Typography>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={24} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <MUIButton
               variant="outlined"
               fullWidth
@@ -184,10 +171,10 @@ const Signup = () => {
               Log in with Google
             </MUIButton>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={6} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <MUIButton
               variant="outlined"
               fullWidth
@@ -199,22 +186,22 @@ const Signup = () => {
               Log in with Facebook
             </MUIButton>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={16} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Divider>OR</Divider>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={16} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <InputLabel>Email</InputLabel>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <TextField
               fullWidth
               id="email"
@@ -226,16 +213,16 @@ const Signup = () => {
               onBlur={handleBlur}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <InputLabel>Password</InputLabel>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <TextField
               fullWidth
               id="password"
@@ -262,7 +249,7 @@ const Signup = () => {
               onBlur={handleBlur}
             />
           </Grid>
-          <Grid container item xs={12} md={8} justifyContent="space-between">
+          <Grid container item xs={11} md={8} justifyContent="space-between">
             <Typography variant="caption" color="#8E3D57">
               <Link href="/signup">Don't have an account?</Link>
             </Typography>
@@ -270,10 +257,10 @@ const Signup = () => {
               <Link href="/login/forgot-password">Forgot password</Link>
             </Typography>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Button
               type="primary"
               text="Submit"
@@ -286,4 +273,4 @@ const Signup = () => {
   )
 }
 
-export default Signup
+export default Login
