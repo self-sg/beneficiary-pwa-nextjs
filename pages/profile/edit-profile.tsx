@@ -4,7 +4,13 @@ import TopNav from '../../components/TopNav'
 import ProfilePicture from '../../components/profile/ProfilePicture'
 import Button from '../../components/Button'
 import React, { useEffect, useState } from 'react'
-import { onAuthStateChanged, auth, updateProfile, updateEmail, updatePhoneNumber } from '../../firebase'
+import {
+  onAuthStateChanged,
+  auth,
+  updateProfile,
+  updateEmail,
+  updatePhoneNumber
+} from '../../firebase'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {
@@ -37,20 +43,16 @@ const AlertMessage = ({ messageType, messageContent, visible }) => {
 
 // TO-DO: Alert message should display error if there is error in saving info (instead of always displaying saved successfully)
 // TO-DO: Convert form to formik form
+// TO-DO: Error handling for file upload issue 
 export default function EditProfile() {
   const hiddenFileInput = React.useRef(null)
-  const [formName, setFormName] = useState('')
-  const [formPhoneNumber, setFormPhoneNumber] = useState('')
-  const [formEmail, setFormEmail] = useState('')
-  const [formProfilePhoto, setFormProfilePhoto] = useState(null)
-  const [formSubmitted, setFormSubmitted] = useState(false)
-  const [alertVisible, setAlertVisible] = useState(false)
-
+  const [photoURL, setPhotoURL] = useState(null)
   const [user, setCurrUser] = useState(null)
 
-  const updateUserProfile = (auth, newName, newPhoneNumber,  newEmail) => {
+  const updateUserProfile = (auth, newName, newPhoneNumber, newEmail, newPhotoURL) => {
     updateProfile(auth.currentUser, {
       displayName: newName,
+      photoURL: newPhotoURL
     })
       .then(() => {
         console.log(auth.currentUser)
@@ -59,52 +61,52 @@ export default function EditProfile() {
         console.log(error)
       })
 
-    updateEmail(auth.currentUser, newEmail).then(() => {
-      console.log(auth.currentUser)
-    }).catch((error) => {
-      console.log(error)
-    });
-
-
+    updateEmail(auth.currentUser, newEmail)
+      .then(() => {
+        console.log(auth.currentUser)
+      })
+      .catch((error) => {
+        console.log(error)
+      })
   }
 
-//   function updateProfilePhoneNumber(newPhoneNumber) {
-//     //country code plus your phone number excluding leading 0 if exists.
-//     // var phoneNumber = "+447xxxxxxxxx"; //you could provide a prompt/modal or other field in your UX to replace this phone number.
+  //   function updateProfilePhoneNumber(newPhoneNumber) {
+  //     //country code plus your phone number excluding leading 0 if exists.
+  //     // var phoneNumber = "+447xxxxxxxxx"; //you could provide a prompt/modal or other field in your UX to replace this phone number.
 
-//     // let phoneNumber = "+441234567890"; //testing number, ideally you should set this in your firebase auth settings
-//     // var verificationCode = "123456";
+  //     // let phoneNumber = "+441234567890"; //testing number, ideally you should set this in your firebase auth settings
+  //     // var verificationCode = "123456";
 
-//     // Turn off phone auth app verification.
-//     // firebase.auth().settings.appVerificationDisabledForTesting = true;
+  //     // Turn off phone auth app verification.
+  //     // firebase.auth().settings.appVerificationDisabledForTesting = true;
 
-//     // This will render a fake reCAPTCHA as appVerificationDisabledForTesting is true.
-//     // This will resolve after rendering without app verification.
-//     var appVerifier = new auth.RecaptchaVerifier(
-//         "recaptcha-container",
-//         {
-//             size: "invisible"
-//         }
-//     );
+  //     // This will render a fake reCAPTCHA as appVerificationDisabledForTesting is true.
+  //     // This will resolve after rendering without app verification.
+  //     var appVerifier = new auth.RecaptchaVerifier(
+  //         "recaptcha-container",
+  //         {
+  //             size: "invisible"
+  //         }
+  //     );
 
-//     var provider = new firebase.auth.PhoneAuthProvider();
-//     provider.verifyPhoneNumber(phoneNumber, appVerifier)
-//         .then(function (verificationId) {
-//             var verificationCode = window.prompt('Please enter the verification ' +
-//                 'code that was sent to your mobile device.');
-//             phoneCredential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
-//             user.currentUser.updatePhoneNumber(phoneCredential);
-//         })
-//         .then((result) => {
-//             // Phone credential now linked to current user.
-//             // User now can sign in with new phone upon logging out.
-//             console.log(result);
-//         })
-//         .catch((error) => {
-//             // Error occurred.
-//             console.log(error);
-//         });
-// }
+  //     var provider = new firebase.auth.PhoneAuthProvider();
+  //     provider.verifyPhoneNumber(phoneNumber, appVerifier)
+  //         .then(function (verificationId) {
+  //             var verificationCode = window.prompt('Please enter the verification ' +
+  //                 'code that was sent to your mobile device.');
+  //             phoneCredential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
+  //             user.currentUser.updatePhoneNumber(phoneCredential);
+  //         })
+  //         .then((result) => {
+  //             // Phone credential now linked to current user.
+  //             // User now can sign in with new phone upon logging out.
+  //             console.log(result);
+  //         })
+  //         .catch((error) => {
+  //             // Error occurred.
+  //             console.log(error);
+  //         });
+  // }
 
   // const handleSubmit = (e) => {
   //   e.preventDefault()
@@ -128,16 +130,16 @@ export default function EditProfile() {
     initialValues: {
       name: '',
       phoneNumber: '',
-      email: '',
+      email: ''
     },
     validationSchema: yup.object().shape({
-      name: yup.string().required('Required'), 
-      email: yup.string().email('Invalid email').required('Required'),
+      name: yup.string().required('Required'),
+      email: yup.string().email('Invalid email').required('Required')
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
-      // TODO: insert backend logic for updating user profile 
-      updateUserProfile(auth, values.name, values.phoneNumber, values.email)
+      // TODO: insert backend logic for updating user profile
+      updateUserProfile(auth, values.name, values.phoneNumber, values.email, photoURL)
     }
   })
 
@@ -147,6 +149,7 @@ export default function EditProfile() {
       setCurrUser(user)
       setFieldValue('name', user.displayName)
       setFieldValue('email', user.email)
+      setPhotoURL(user.photoURL)
       // ...
     } else {
       // User is signed out
@@ -162,17 +165,38 @@ export default function EditProfile() {
     <div className={styles.container}>
       <TopNav pageName={'Edit Account Profile'} displayBackButton={true} />
       <form onSubmit={handleSubmit}>
-        <Grid container justifyContent="center">
-          
-          
-
-          <Grid item xs={12} md={8}>
+        <Grid container justifyContent="center" sx={{ padding: '20px' }}>
+          <Grid item container xs={11} md={8} justifyContent="center">
+            <ProfilePicture selectedPhoto={photoURL} />
+          </Grid>
+          <Grid item container xs={11} md={8} justifyContent="center">
+            <button
+              onClick={(event) => {
+                hiddenFileInput.current.click()
+              }}
+              className={`text-s ${profileStyles.uploadPhotoButton}`}
+              type='button'
+            >
+              Upload new photo
+            </button>
+          </Grid>
+          <input
+            type="file"
+            name="myImage"
+            ref={hiddenFileInput}
+            onChange={(event) => {
+              console.log(event.target.files[0])
+              setPhotoURL(event.target.files[0])
+            }}
+            style={{ display: 'none' }}
+          />
+          <Grid item xs={11} md={8}>
             <InputLabel>Name</InputLabel>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <TextField
               fullWidth
               id="name"
@@ -182,18 +206,23 @@ export default function EditProfile() {
               error={touched.name && Boolean(errors.name)}
               helperText={touched.name && errors.name}
               onBlur={handleBlur}
+              sx={{
+                '& fieldset': {
+                  borderRadius: '8px'
+                }
+              }}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <InputLabel>Mobile</InputLabel>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <TextField
               fullWidth
               id="mobile"
@@ -204,18 +233,23 @@ export default function EditProfile() {
               error={touched.phoneNumber && Boolean(errors.phoneNumber)}
               helperText={touched.phoneNumber && errors.phoneNumber}
               onBlur={handleBlur}
+              sx={{
+                '& fieldset': {
+                  borderRadius: '8px'
+                }
+              }}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <InputLabel>Email</InputLabel>
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
-          <Grid item xs={12} md={8}>
+          <Grid item xs={11} md={8}>
             <TextField
               fullWidth
               id="email"
@@ -225,17 +259,21 @@ export default function EditProfile() {
               error={touched.email && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               onBlur={handleBlur}
+              sx={{
+                '& fieldset': {
+                  borderRadius: '8px'
+                }
+              }}
             />
           </Grid>
-          <Grid item xs={12} md={8}>
-            <Button
-              type="primary"
-              text="Submit"
-              disabled={!isValid || !dirty}
-            />
+          <Grid item xs={11} md={8}>
+            <Box height={24} />
+          </Grid>
+          <Grid container xs={11} md={8}>
+            <Button type="submit" text="Save" disabled={!isValid || !dirty} />
           </Grid>
         </Grid>
-      </form> 
+      </form>
     </div>
 
     // return (
@@ -247,28 +285,8 @@ export default function EditProfile() {
     //         messageContent="Saved successfully."
     //         visible={alertVisible}
     //       />
-    //       <ProfilePicture selectedPhoto={formProfilePhoto} />
 
-    //       <button
-    //         onClick={(event) => {
-    //           hiddenFileInput.current.click()
-    //         }}
-    //         className={`text-s ${profileStyles.uploadPhotoButton}`}
-    //       >
-    //         Upload new photo
-    //       </button>
-    //       <input
-    //         type="file"
-    //         name="myImage"
-    //         ref={hiddenFileInput}
-    //         onChange={(event) => {
-    //           console.log(event.target.files[0])
-    //           setFormProfilePhoto(event.target.files[0])
-    //           setFormSubmitted(false)
-    //         }}
-    //         style={{ display: 'none' }}
-    //       />
-    //     </div>
+    // </div>
     //     <form className={profileStyles.formContainer} onSubmit={handleSubmit}>
     //       <label className={profileStyles.formField}>
     //         Name

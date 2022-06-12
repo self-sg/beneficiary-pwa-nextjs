@@ -6,7 +6,6 @@ import support from '../public/assets/navigation/support.svg'
 import supportActive from '../public/assets/navigation/support-active.svg'
 import Image from 'next/image'
 import Link from 'next/link'
-import { onAuthStateChanged, auth } from '../firebase'
 
 // Thank you to https://github.com/coderzway/next-js-bottom-navigation-bar
 
@@ -16,16 +15,6 @@ interface Props {
 
 export default function BottomNav(props: Props) {
   const [activeTabs, setActiveTabs] = useState(props.featureName)
-  const [loggedIn, setLoggedIn] = useState(false)
-
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      setLoggedIn(true)
-    } else {
-      console.log("not signed in ")
-      setLoggedIn(false)
-    }
-  })
 
   return (
     <div className={styles.navbar}>
@@ -53,7 +42,7 @@ export default function BottomNav(props: Props) {
         </Link>
       </div>
       <div className={`${styles.tabContainer}`}>
-        <Link href={loggedIn ? "/profile" : "/login"} >
+        <Link href="/profile" >
           {activeTabs === 'profile' ? (
             <div className={styles.tab}>
               <Image

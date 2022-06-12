@@ -21,8 +21,9 @@ export default function Profile() {
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
   const [profilePhoto, setProfilePhoto] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(false)
 
-  // const router = useRouter()
+  const router = useRouter()
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -30,9 +31,13 @@ export default function Profile() {
       const email = user.email
       setName(name)
       setEmail(email)
+      setLoggedIn(true)
     } else {
       console.log("not signed in ")
-      // router.push("/login")
+      setLoggedIn(false)
+      setTimeout(() => {
+        router.push("/login")
+      }, 1000)
     }
   })
 
@@ -87,7 +92,8 @@ export default function Profile() {
     }]
   ]
 
-  return (
+
+  return loggedIn ? (
     <div className={styles.container}>
       <TopNav pageName={'My Profile'} displayBackButton={false} />
       <div className={profileStyles.infoContainer}>
@@ -113,5 +119,10 @@ export default function Profile() {
       </div>
       <BottomNav featureName="profile" />
     </div>
-  )
+  ) :
+  (
+    <div className={styles.container}>
+      This page is only for authenticated users. Redirecting to login page...
+    </div>
+  ) 
 }
