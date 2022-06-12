@@ -21,7 +21,8 @@ import Link from 'next/link'
 import { useRouter } from 'next/router'
 import Button from '../../components/Button'
 import { auth, signInWithEmailAndPassword } from '../../firebase'
-import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
+import styles from '../../styles/Page.module.css'
 
 const ForgotPassword = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
@@ -54,75 +55,79 @@ const ForgotPassword = () => {
   // console.log(errors)
 
   return (
-    <div style={{ padding: '20px' }}>
+    <form onSubmit={handleSubmit}>
       {formSubmitted ? <Alert
-        iconMapping={{
-          success: <CheckCircleOutlineIcon fontSize="inherit" />
-        }}
-      >
-        We have sent a password reset link to your email. Please check your inbox.
-      </Alert> : <></>}
-      <form onSubmit={handleSubmit}>
-        <Grid container justifyContent="center">
-          <Grid item xs={12} md={8}>
-            <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
-              Forgot password?
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Box height={24} />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Typography variant="h5" sx={{ fontWeight: 'bold' }}>
-              Please enter your email address to receive a password reset link.
-            </Typography>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Box height={16} />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <InputLabel>Email</InputLabel>
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Box height={8} />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <TextField
-              fullWidth
-              id="email"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              error={touched.email && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
-              onBlur={handleBlur}
-            />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Box height={8} />
-          </Grid>
+          iconMapping={{
+            success: <CheckCircleOutlineIcon sx={{color:'white', fontSize: 24, }} />
+          }}
+          sx={{backgroundColor: '#32693B', color: 'white', height: '80px', fontSize: 16, display: 'flex', alignItems: 'center'}}
+        >
+          We have sent a password reset link to your email. Please check your inbox.
+        </Alert> : <></>}
+      <Grid container justifyContent="center" marginTop="160px">
+        <Grid item xs={11} md={8}>
+          <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+            Forgot password?
+          </Typography>
+        </Grid>
+        <Grid item xs={11} md={8}>
+          <Box height={24} />
+        </Grid>
+        <Grid item xs={11} md={8}>
+          <Typography variant="h6">
+            Please enter your email address to receive a password reset link.
+          </Typography>
+        </Grid>
+        <Grid item xs={11} md={8}>
+          <Box height={16} />
+        </Grid>
+        <Grid item xs={11} md={8}>
+          <InputLabel>Email</InputLabel>
+        </Grid>
+        <Grid item xs={11} md={8}>
+          <Box height={8} />
+        </Grid>
+        <Grid item xs={11} md={8}>
+          <TextField
+            fullWidth
+            id="email"
+            name="email"
+            value={values.email}
+            onChange={handleChange}
+            error={touched.email && Boolean(errors.email)}
+            helperText={touched.email && errors.email}
+            onBlur={handleBlur}
+            sx={{
+              '& fieldset': {
+                borderRadius: '8px'
+              }
+            }}
+          />
+        </Grid>
+        <Grid item xs={11} md={8}>
+          <Box height={8} />
+        </Grid>
+        <Grid container xs={11} md={8} sx={{height: 200, marginBottom: '48px', display: 'flex', alignItems: 'flex-end', justifyContent: 'çenter'}}>
           {formSubmitted ? (
-            <Grid item xs={12} md={8}>
-              <Typography variant="h5">
-                <Link href="/login">Return to login</Link>
-              </Typography>
-            </Grid>
+            <InputLabel sx={{ color: '#8E3D57', display: 'flex', justifyContent: 'center'}}>
+              <Link href="/login">Return to login</Link>
+            </InputLabel>
+            
           ) : (
             <></>
           )}
-          <Grid item xs={12} md={8}>
-            <Box height={8} />
-          </Grid>
-          <Grid item xs={12} md={8}>
-            <Button
-              type="primary"
-              text="Submit"
-              disabled={!isValid || !dirty || formSubmitted}
-            />
-          </Grid>
+         
         </Grid>
-      </form>
-    </div>
+        <Grid container xs={11} md={8}>
+          <Button
+            type="submit"
+            text="Submit"
+            disabled={!isValid || !dirty || formSubmitted}
+          />
+        </Grid>
+      </Grid>
+    </form>
+    // </div>
   )
 }
 

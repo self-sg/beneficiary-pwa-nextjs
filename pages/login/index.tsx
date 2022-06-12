@@ -228,7 +228,7 @@ const Login = () => {
               fullWidth
               id="password"
               name="password"
-              type="password"
+              type={showPassword ? 'text' : 'password'}
               value={values.password}
               onChange={handleChange}
               error={touched.password && Boolean(errors.password)}
