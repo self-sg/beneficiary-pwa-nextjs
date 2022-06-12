@@ -36,15 +36,14 @@ import {
 const Signup = () => {
   const [showPassword, setShowPassword] = useState(false);
   const router = useRouter()
+  const GoogleProvider = new GoogleAuthProvider()
+  const FacebookProvider = new FacebookAuthProvider()
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log('user is logged in')
       router.push('/')
-      // ...
     } else {
-      // User is signed out
-      // ...
       console.log('user is not logged in')
     }
   })
@@ -70,63 +69,19 @@ const Signup = () => {
       })
   }
 
-  const GoogleProvider = new GoogleAuthProvider()
-  const FacebookProvider = new FacebookAuthProvider()
+  const signUpWithProvider = (provider) => {
+    signInWithRedirect(auth, provider)
 
-  const signUpWithGoogle = () => {
-    signInWithRedirect(auth, GoogleProvider)
-
-    router.push('/signup/success')
-    // getRedirectResult(auth)
-    //   .then((result) => {
-    //     // This gives you a Google Access Token. You can use it to access Google APIs.
-    //     const credential =  GoogleAuthProvider.credentialFromResult(result)
-    //     const token = credential.accessToken
-
-    //     // The signed-in user info.
-    //     const user = result.user
-    //     console.log("hey")
-    //     console.log(user)
-    //   })
-    //   .catch((error) => {
-    //     // Handle Errors here.
-    //     const errorCode = error.code
-    //     const errorMessage = error.message
-    //     // The email of the user's account used.
-    //     const email = error.customData.email
-    //     // The AuthCredential type that was used.
-    //     const credential = GoogleAuthProvider.credentialFromError(error)
-
-    //     console.log(error)
-    //   })
-  }
-
-  const signUpWithFacebook = () => {
-    signInWithRedirect(auth, FacebookProvider)
+    getRedirectResult(auth)
+      .then((result) => {
+        const user = result.user
+        console.log(user)
+      })
+      .catch((error) => {
+        console.log(error.message)
+      })
 
     router.push('/signup/success')
-    // getRedirectResult(auth)
-    //   .then((result) => {
-    //     // This gives you a Google Access Token. You can use it to access Google APIs.
-    //     const credential =  GoogleAuthProvider.credentialFromResult(result)
-    //     const token = credential.accessToken
-
-    //     // The signed-in user info.
-    //     const user = result.user
-    //     console.log("hey")
-    //     console.log(user)
-    //   })
-    //   .catch((error) => {
-    //     // Handle Errors here.
-    //     const errorCode = error.code
-    //     const errorMessage = error.message
-    //     // The email of the user's account used.
-    //     const email = error.customData.email
-    //     // The AuthCredential type that was used.
-    //     const credential = GoogleAuthProvider.credentialFromError(error)
-
-    //     console.log(error)
-    //   })
   }
 
   const {
@@ -154,15 +109,10 @@ const Signup = () => {
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
-      // TODO: insert backend logic for creating a new user
       signUp(auth, values.email, values.password, values.name)
       router.push('/signup/success')
     }
   })
-
-  // console.log("logging touched ",touched)
-  // console.log(values)
-  // console.log(errors)
 
   return (
     <div style={{ padding: '30px' }}>
@@ -224,7 +174,7 @@ const Signup = () => {
                 fontSize: '16px',
                 borderRadius: '8px'
               }}
-              onClick={signUpWithGoogle}
+              onClick={() => signUpWithProvider(GoogleProvider)}
             >
               Sign up with Google
             </MUIButton>
@@ -252,7 +202,7 @@ const Signup = () => {
                 fontSize: '16px',
                 borderRadius: '8px'
               }}
-              onClick={signUpWithFacebook}
+              onClick={() => signUpWithProvider(FacebookProvider)}
             >
               Sign up with Facebook
             </MUIButton>
@@ -362,14 +312,21 @@ const Signup = () => {
             />
           </Grid>
           <Grid item xs={11} md={8}>
-            <Link href="/login">Already have an account?</Link>
-          </Grid>
-          <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
           <Grid item xs={11} md={8}>
+            <InputLabel sx={{color:"#8E3D57"}} >
+              <Link href="/login">
+                Already have an account?
+              </Link>
+            </InputLabel>
+          </Grid>
+          <Grid item xs={11} md={8}>
+            <Box height={24} />
+          </Grid>
+          <Grid container xs={11} md={8}>
             <Button
-              type="primary"
+              type="submit"
               text="Submit"
               disabled={!isValid || !dirty}
             />

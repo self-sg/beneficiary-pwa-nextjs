@@ -11,14 +11,15 @@ interface Props {
 
 export default function Button(props: Props) {
   let textClassName = ''
-  if (props.type === 'primary') {
-    textClassName = 'text-m-sb'
-  } else if (props.type === 'secondary') {
+  if (props.disabled) {
     textClassName = 'text-m-r'
+  } else {
+    textClassName = 'text-m-sb'
   }
+  
   return (
     <button 
-      className={props.disabled ? `${styles['saveDisabled']}` : `${styles[props.type]}`} 
+      className={props.type != 'submit' ?  `${styles[props.type]}` : props.disabled ? `${styles.saveDisabled}` : `${styles.saveActive}`} 
       onClick={props.clickHandler} 
       disabled={props.disabled}>
       <span className={`${textClassName} ${styles.buttonText}`}>

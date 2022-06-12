@@ -30,17 +30,16 @@ import {
 } from '../../firebase'
 
 const Login = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
+  const GoogleProvider = new GoogleAuthProvider()
+  const FacebookProvider = new FacebookAuthProvider()
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log('user is logged in')
       router.push('/')
-      // ...
     } else {
-      // User is signed out
-      // ...
       console.log('user is not logged in')
     }
   })
@@ -61,44 +60,19 @@ const Login = () => {
     event.preventDefault()
   }
 
-  const GoogleProvider = new GoogleAuthProvider()
-  const FacebookProvider = new FacebookAuthProvider()
-  const signInWithGoogle = () => {
-    signInWithRedirect(auth, GoogleProvider)
+  const signInWithProvider = (provider) => {
+    signInWithRedirect(auth, provider)
+
     getRedirectResult(auth)
       .then((result) => {
-        // This gives you a Google Access Token. You can use it to access Google APIs.
-        const credential = GoogleAuthProvider.credentialFromResult(result)
-        const token = credential.accessToken
-
-        // The signed-in user info.
         const user = result.user
-        console.log(credential)
-        console.log(token)
         console.log(user)
       })
       .catch((error) => {
-        // Handle Errors here.
-        const errorCode = error.code
-        const errorMessage = error.message
-        // The email of the user's account used.
-        const email = error.customData.email
-        // The AuthCredential type that was used.
-        const credential = GoogleAuthProvider.credentialFromError(error)
-        // ...
-        console.log("logging erorrs...")
-        console.log(errorCode)
-        console.log(errorMessage)
-        console.log(email)
-        console.log(credential)
+        console.log(error.message)
       })
 
-    router.push('/')
-  }
-  const signInWithFacebook = () => {
-    signInWithRedirect(auth, FacebookProvider)
-
-    router.push('/')
+    router.push('/signup/success')
   }
 
   const {
@@ -125,15 +99,10 @@ const Login = () => {
     }),
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
-      // TODO: insert backend logic for creating a new user
       signIn(auth, values.email, values.password)
       router.push('/support')
     }
   })
-
-  // console.log("logging touched ",touched)
-  // console.log(values)
-  // console.log(errors)
 
   return (
     <div style={{ padding: '20px' }}>
@@ -152,7 +121,7 @@ const Login = () => {
             <Box height={24} />
           </Grid>
           <Grid item xs={11} md={8}>
-            <Typography variant="h4" sx={{ fontWeight: 'bold' }}>
+            <Typography variant="h4" sx={{ fontWeight: 'bold' }} color="black">
               Login
             </Typography>
           </Grid>
@@ -163,10 +132,20 @@ const Login = () => {
             <MUIButton
               variant="outlined"
               fullWidth
-              startIcon={<FcGoogle />}
+              startIcon={
+                <FcGoogle style={{ marginRight: '20px' }} size="30px" />
+              }
               size="large"
-              sx={{ justifyContent: 'start' }}
-              onClick={signInWithGoogle}
+              sx={{
+                justifyContent: 'start',
+                borderColor: '#737373',
+                height: '52px',
+                textTransform: 'none',
+                color: '#737373',
+                fontSize: '16px',
+                borderRadius: '8px'
+              }}
+              onClick={() => signInWithProvider(GoogleProvider)}
             >
               Log in with Google
             </MUIButton>
@@ -178,10 +157,23 @@ const Login = () => {
             <MUIButton
               variant="outlined"
               fullWidth
-              startIcon={<BsFacebook />}
+              startIcon={
+                <BsFacebook
+                  style={{ color: 'blue', marginRight: '20px' }}
+                  size="30px"
+                />
+              }
               size="large"
-              sx={{ justifyContent: 'start' }}
-              onClick={signInWithFacebook}
+              sx={{
+                justifyContent: 'start',
+                borderColor: '#737373',
+                height: '52px',
+                textTransform: 'none',
+                color: '#737373',
+                fontSize: '16px',
+                borderRadius: '8px'
+              }}
+              onClick={() => signInWithProvider(FacebookProvider)}
             >
               Log in with Facebook
             </MUIButton>
@@ -190,7 +182,11 @@ const Login = () => {
             <Box height={16} />
           </Grid>
           <Grid item xs={11} md={8}>
-            <Divider>OR</Divider>
+            <Divider sx={{ borderBottomWidth: 10 }}>
+              <Typography variant="h6" color="#737373">
+                OR
+              </Typography>
+            </Divider>
           </Grid>
           <Grid item xs={11} md={8}>
             <Box height={16} />
@@ -211,6 +207,11 @@ const Login = () => {
               error={touched.email && Boolean(errors.email)}
               helperText={touched.email && errors.email}
               onBlur={handleBlur}
+              sx={{
+                '& fieldset': {
+                  borderRadius: '8px'
+                }
+              }}
             />
           </Grid>
           <Grid item xs={11} md={8}>
@@ -237,32 +238,40 @@ const Login = () => {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={handleClickShowPassword}
+                      onClick={() => setShowPassword(!showPassword)}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                     >
-                      {values.showPassword ? <VisibilityOff /> : <Visibility />}
+                      {showPassword ? <VisibilityOff /> : <Visibility />}
                     </IconButton>
                   </InputAdornment>
                 )
               }}
               onBlur={handleBlur}
+              sx={{
+                '& fieldset': {
+                  borderRadius: '8px'
+                }
+              }}
             />
-          </Grid>
-          <Grid container item xs={11} md={8} justifyContent="space-between">
-            <Typography variant="caption" color="#8E3D57">
-              <Link href="/signup">Don't have an account?</Link>
-            </Typography>
-            <Typography variant="caption" color="#8E3D57">
-              <Link href="/login/forgot-password">Forgot password</Link>
-            </Typography>
           </Grid>
           <Grid item xs={11} md={8}>
             <Box height={8} />
           </Grid>
+          <Grid container item xs={11} md={8} justifyContent="space-between">
+            <InputLabel sx={{ color: '#8E3D57' }}>
+              <Link href="/signup">Don't have an account?</Link>
+            </InputLabel>
+            <InputLabel sx={{ color: '#8E3D57' }}>
+              <Link href="/login/forgot-password">Forgot password</Link>
+            </InputLabel>
+          </Grid>
           <Grid item xs={11} md={8}>
+            <Box height={24} />
+          </Grid>
+          <Grid container xs={11} md={8}>
             <Button
-              type="primary"
+              type="submit"
               text="Submit"
               disabled={!isValid || !dirty}
             />

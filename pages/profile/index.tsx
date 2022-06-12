@@ -22,7 +22,7 @@ export default function Profile() {
   const [email, setEmail] = useState('')
   const [profilePhoto, setProfilePhoto] = useState(null)
 
-  const router = useRouter()
+  // const router = useRouter()
 
   onAuthStateChanged(auth, (user) => {
     if (user) {
@@ -32,6 +32,7 @@ export default function Profile() {
       setEmail(email)
     } else {
       console.log("not signed in ")
+      // router.push("/login")
     }
   })
 
