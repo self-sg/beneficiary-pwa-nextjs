@@ -26,6 +26,7 @@ import styles from '../../styles/Page.module.css'
 
 const ForgotPassword = () => {
   const [formSubmitted, setFormSubmitted] = useState(false)
+  const [alertVisible, setAlertVisible] = useState(false)
 
   const {
     handleSubmit,
@@ -46,6 +47,8 @@ const ForgotPassword = () => {
     onSubmit: (values) => {
       alert(JSON.stringify(values, null, 2))
       setFormSubmitted(true)
+      setAlertVisible(true)
+      setTimeout(() => setAlertVisible(false), 2000)
       // TODO: insert backend logic for sending verification email
     }
   })
@@ -57,7 +60,7 @@ const ForgotPassword = () => {
   return (
     <div style={{ position: 'relative' }}>
       <form onSubmit={handleSubmit}>
-        {formSubmitted ? (
+        {formSubmitted && alertVisible ? (
           <Alert
             iconMapping={{
               success: (

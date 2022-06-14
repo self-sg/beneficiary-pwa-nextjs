@@ -36,6 +36,7 @@ const PasswordReset = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
     useState(false)
+  const [alertVisible, setAlertVisible] = useState(false)
   const router = useRouter()
 
   const handleMouseDownPassword = (
@@ -71,6 +72,8 @@ const PasswordReset = () => {
       alert(JSON.stringify(values, null, 2))
       setFormSubmitted(true)
       // TODO: insert backend logic for resetting password
+      setAlertVisible(true)
+      setTimeout(() => setAlertVisible(false), 2000)
     }
   })
 
@@ -81,7 +84,7 @@ const PasswordReset = () => {
   return (
     <div style={{ position: 'relative' }}>
       <form onSubmit={handleSubmit}>
-        {formSubmitted ? (
+        {formSubmitted && alertVisible ? (
           <Alert
             iconMapping={{
               success: (
@@ -225,7 +228,7 @@ const PasswordReset = () => {
               height: 160,
               marginBottom: '48px',
               display: 'flex',
-              alignItems: 'flex-end',
+              alignItems: 'flex-end'
             }}
           >
             {formSubmitted ? (
@@ -234,7 +237,7 @@ const PasswordReset = () => {
                   color: '#8E3D57',
                   width: '100%',
                   display: 'flex',
-                  justifyContent: 'center',
+                  justifyContent: 'center'
                 }}
               >
                 <Link href="/login">Return to login</Link>
