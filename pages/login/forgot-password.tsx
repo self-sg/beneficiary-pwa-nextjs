@@ -134,19 +134,19 @@ const ForgotPassword = () => {
             xs={11}
             md={8}
             sx={{
-              height: 200,
+              height: 160,
               marginBottom: '48px',
               display: 'flex',
               alignItems: 'flex-end',
-              justifyContent: 'çenter'
             }}
           >
             {formSubmitted ? (
               <InputLabel
                 sx={{
                   color: '#8E3D57',
+                  width: '100%',
                   display: 'flex',
-                  justifyContent: 'center'
+                  justifyContent: 'center',
                 }}
               >
                 <Link href="/login">Return to login</Link>
