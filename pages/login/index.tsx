@@ -1,4 +1,4 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {
@@ -31,18 +31,22 @@ import {
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
   const router = useRouter()
   const GoogleProvider = new GoogleAuthProvider()
   const FacebookProvider = new FacebookAuthProvider()
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log('user is logged in')
-      router.push('/')
-    } else {
-      console.log('user is not logged in')
-    }
-  })
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log(user)
+          setLoggedIn(true)
+          router.push("/")
+        } 
+      }),
+    []
+  )
 
   const signIn = (auth, email, password) => {
     signInWithEmailAndPassword(auth, email, password)
@@ -104,7 +108,7 @@ const Login = () => {
     }
   })
 
-  return (
+  return ! loggedIn ? (
     <div style={{ padding: '20px' }}>
       <form onSubmit={handleSubmit}>
         <Grid container justifyContent="center">
@@ -279,7 +283,7 @@ const Login = () => {
         </Grid>
       </form>
     </div>
-  )
+  ) : null
 }
 
 export default Login

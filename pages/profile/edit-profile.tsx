@@ -9,8 +9,10 @@ import {
   auth,
   updateProfile,
   updateEmail,
-  updatePhoneNumber
+  updatePhoneNumber,
+  storage
 } from '../../firebase'
+import { ref, uploadBytes, getDownloadURL } from 'firebase/storage'
 import { useFormik } from 'formik'
 import * as yup from 'yup'
 import {
@@ -19,7 +21,8 @@ import {
   InputAdornment,
   Typography,
   InputLabel,
-  Box
+  Box,
+  Alert
 } from '@mui/material'
 import TextField from '@mui/material/TextField'
 // import { Button as MUIButton } from '@mui/material'
@@ -30,6 +33,9 @@ import { FcGoogle } from 'react-icons/fc'
 import { BsFacebook } from 'react-icons/bs'
 import Link from 'next/link'
 import { useRouter } from 'next/router'
+import Avatar from '@mui/material/Avatar'
+import { securityRules } from 'firebase-admin'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 
 // Credits to https://medium.com/web-dev-survey-from-kyoto/how-to-customize-the-file-upload-button-in-react-b3866a5973d8 for
 // the styling of the photo upload button
@@ -43,16 +49,41 @@ const AlertMessage = ({ messageType, messageContent, visible }) => {
 
 // TO-DO: Alert message should display error if there is error in saving info (instead of always displaying saved successfully)
 // TO-DO: Convert form to formik form
-// TO-DO: Error handling for file upload issue 
+// TO-DO: Error handling for file upload issue
 export default function EditProfile() {
   const hiddenFileInput = React.useRef(null)
-  const [photoURL, setPhotoURL] = useState(null)
   const [user, setCurrUser] = useState(null)
+  const [url, setUrl] = useState(null)
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [loggedIn, setLoggedIn] = useState(false)
+  const [alertVisible, setAlertVisible] = useState(false)
+  const router = useRouter()
 
-  const updateUserProfile = (auth, newName, newPhoneNumber, newEmail, newPhotoURL) => {
+  const handleUploadImage = (event) => {
+    if (event.target.files[0]) {
+      const image = event.target.files[0]
+      console.log(image)
+      const imageRef = ref(storage, `${user.displayName} profile picture`)
+      uploadBytes(imageRef, image)
+        .then(() => {
+          getDownloadURL(imageRef)
+            .then((url) => {
+              setUrl(url)
+            })
+            .catch((error) => {
+              console.log(error.message, 'error getting the image url')
+            })
+        })
+        .catch((error) => {
+          console.log(error.message, 'error uploading the image')
+        })
+    }
+  }
+
+  const updateUserProfile = (auth, newName, newPhoneNumber, newEmail, url) => {
     updateProfile(auth.currentUser, {
       displayName: newName,
-      photoURL: newPhotoURL
+      photoURL: url
     })
       .then(() => {
         console.log(auth.currentUser)
@@ -68,6 +99,8 @@ export default function EditProfile() {
       .catch((error) => {
         console.log(error)
       })
+
+    console.log('updated profile details')
   }
 
   //   function updateProfilePhoneNumber(newPhoneNumber) {
@@ -125,7 +158,8 @@ export default function EditProfile() {
     handleBlur,
     isValid,
     dirty,
-    setFieldValue
+    setFieldValue,
+    submitCount
   } = useFormik({
     initialValues: {
       name: '',
@@ -137,203 +171,253 @@ export default function EditProfile() {
       email: yup.string().email('Invalid email').required('Required')
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
-      // TODO: insert backend logic for updating user profile
-      updateUserProfile(auth, values.name, values.phoneNumber, values.email, photoURL)
+      setFormSubmitted(true)
+      updateUserProfile(
+        auth,
+        values.name,
+        values.phoneNumber,
+        values.email,
+        url
+      )
     }
   })
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      console.log(user)
-      setCurrUser(user)
-      setFieldValue('name', user.displayName)
-      setFieldValue('email', user.email)
-      setPhotoURL(user.photoURL)
-      // ...
-    } else {
-      // User is signed out
-      // ...
-    }
-  })
+  useEffect(
+    () =>
+      onAuthStateChanged(auth, (user) => {
+        if (user) {
+          console.log(user)
+          setCurrUser(user)
+          setFieldValue('name', user.displayName)
+          setFieldValue('email', user.email)
+          setUrl(user.photoURL)
+          setLoggedIn(true)
+          // setProfilePhoto()
+          // ...
+        } else {
+          // User is signed out
+          // ...
+          router.push('/login')
+        }
+      }),
+    []
+  )
 
   // console.log("logging touched ",touched)
   // console.log(values)
   // console.log(errors)
 
-  return (
+  return loggedIn ? (
     <div className={styles.container}>
       <TopNav pageName={'Edit Account Profile'} displayBackButton={true} />
-      <form onSubmit={handleSubmit}>
-        <Grid container justifyContent="center" sx={{ padding: '20px' }}>
-          <Grid item container xs={11} md={8} justifyContent="center">
-            <ProfilePicture selectedPhoto={photoURL} />
-          </Grid>
-          <Grid item container xs={11} md={8} justifyContent="center">
-            <button
-              onClick={(event) => {
-                hiddenFileInput.current.click()
-              }}
-              className={`text-s ${profileStyles.uploadPhotoButton}`}
-              type='button'
-            >
-              Upload new photo
-            </button>
-          </Grid>
-          <input
-            type="file"
-            name="myImage"
-            ref={hiddenFileInput}
-            onChange={(event) => {
-              console.log(event.target.files[0])
-              setPhotoURL(event.target.files[0])
+      <div style={{position: 'relative'}}>
+        {formSubmitted ? (
+          <Alert
+            iconMapping={{
+              success: (
+                <CheckCircleOutlineIcon sx={{ color: 'white', fontSize: 24 }} />
+              )
             }}
-            style={{ display: 'none' }}
-          />
-          <Grid item xs={11} md={8}>
-            <InputLabel>Name</InputLabel>
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <Box height={8} />
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <TextField
-              fullWidth
-              id="name"
-              name="name"
-              value={values.name}
-              onChange={handleChange}
-              error={touched.name && Boolean(errors.name)}
-              helperText={touched.name && errors.name}
-              onBlur={handleBlur}
-              sx={{
-                '& fieldset': {
-                  borderRadius: '8px'
-                }
-              }}
+            sx={{
+              backgroundColor: '#32693B',
+              color: 'white',
+              height: '60px',
+              width: '100vw',
+              position: 'absolute',
+              top: '0px',
+              fontSize: 16,
+              display: 'flex',
+              alignItems: 'center',
+              zIndex: 10
+            }}
+          >
+            Saved successfully.
+          </Alert>
+        ) : (
+          <></>
+        )}
+        <form onSubmit={handleSubmit}>
+          <Grid container justifyContent="center" sx={{ padding: '20px' }}>
+            <Grid item container xs={11} md={8} justifyContent="center">
+              <Avatar src={url} sx={{ width: 150, height: 150, zIndex: 1 }} />
+            </Grid>
+            <Grid item container xs={11} md={8} justifyContent="center">
+              <button
+                onClick={(event) => {
+                  hiddenFileInput.current.click()
+                  setFormSubmitted(false)
+                }}
+                className={`text-s ${profileStyles.uploadPhotoButton}`}
+                type="button"
+              >
+                Upload new photo
+              </button>
+            </Grid>
+            <input
+              type="file"
+              name="myImage"
+              ref={hiddenFileInput}
+              onChange={handleUploadImage}
+              style={{ display: 'none' }}
             />
+            <Grid item xs={11} md={8}>
+              <InputLabel>Name</InputLabel>
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <Box height={8} />
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <TextField
+                fullWidth
+                id="name"
+                name="name"
+                value={values.name}
+                onChange={(event) => {
+                  handleChange(event)
+                  setFormSubmitted(false)
+                }}
+                error={touched.name && Boolean(errors.name)}
+                helperText={touched.name && errors.name}
+                onBlur={handleBlur}
+                sx={{
+                  '& fieldset': {
+                    borderRadius: '8px'
+                  }
+                }}
+              />
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <Box height={8} />
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <InputLabel>Mobile</InputLabel>
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <Box height={8} />
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <TextField
+                fullWidth
+                id="mobile"
+                name="phoneNumber"
+                type="phoneNumber"
+                value={values.phoneNumber}
+                onChange={(event) => {
+                  handleChange(event)
+                  setFormSubmitted(false)
+                }}
+                error={touched.phoneNumber && Boolean(errors.phoneNumber)}
+                helperText={touched.phoneNumber && errors.phoneNumber}
+                onBlur={handleBlur}
+                sx={{
+                  '& fieldset': {
+                    borderRadius: '8px'
+                  }
+                }}
+              />
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <Box height={8} />
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <InputLabel>Email</InputLabel>
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <Box height={8} />
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <TextField
+                fullWidth
+                id="email"
+                name="email"
+                value={values.email}
+                onChange={(event) => {
+                  handleChange(event)
+                  setFormSubmitted(false)
+                }}
+                error={touched.email && Boolean(errors.email)}
+                helperText={touched.email && errors.email}
+                onBlur={handleBlur}
+                sx={{
+                  '& fieldset': {
+                    borderRadius: '8px'
+                  }
+                }}
+              />
+            </Grid>
+            <Grid item xs={11} md={8}>
+              <Box height={24} />
+            </Grid>
+            <Grid container xs={11} md={8}>
+              <Button
+                type="submit"
+                text="Save"
+                disabled={!isValid || !dirty || formSubmitted}
+              />
+            </Grid>
           </Grid>
-          <Grid item xs={11} md={8}>
-            <Box height={8} />
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <InputLabel>Mobile</InputLabel>
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <Box height={8} />
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <TextField
-              fullWidth
-              id="mobile"
-              name="phoneNumber"
-              type="phoneNumber"
-              value={values.phoneNumber}
-              onChange={handleChange}
-              error={touched.phoneNumber && Boolean(errors.phoneNumber)}
-              helperText={touched.phoneNumber && errors.phoneNumber}
-              onBlur={handleBlur}
-              sx={{
-                '& fieldset': {
-                  borderRadius: '8px'
-                }
-              }}
-            />
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <Box height={8} />
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <InputLabel>Email</InputLabel>
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <Box height={8} />
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <TextField
-              fullWidth
-              id="email"
-              name="email"
-              value={values.email}
-              onChange={handleChange}
-              error={touched.email && Boolean(errors.email)}
-              helperText={touched.email && errors.email}
-              onBlur={handleBlur}
-              sx={{
-                '& fieldset': {
-                  borderRadius: '8px'
-                }
-              }}
-            />
-          </Grid>
-          <Grid item xs={11} md={8}>
-            <Box height={24} />
-          </Grid>
-          <Grid container xs={11} md={8}>
-            <Button type="submit" text="Save" disabled={!isValid || !dirty} />
-          </Grid>
-        </Grid>
-      </form>
+        </form>
+      </div>
     </div>
+  ) : null
 
-    // return (
-    //   <div className={styles.container}>
-    //     <TopNav pageName={'Edit Account Profile'} displayBackButton={true} />
-    //     <div className={profileStyles.uploadPhotoContainer}>
-    //       <AlertMessage
-    //         messageType="success"
-    //         messageContent="Saved successfully."
-    //         visible={alertVisible}
-    //       />
+  // return (
+  //   <div className={styles.container}>
+  //     <TopNav pageName={'Edit Account Profile'} displayBackButton={true} />
+  //     <div className={profileStyles.uploadPhotoContainer}>
+  //       <AlertMessage
+  //         messageType="success"
+  //         messageContent="Saved successfully."
+  //         visible={alertVisible}
+  //       />
 
-    // </div>
-    //     <form className={profileStyles.formContainer} onSubmit={handleSubmit}>
-    //       <label className={profileStyles.formField}>
-    //         Name
-    //         <input
-    //           className={profileStyles.inputBox}
-    //           type="text"
-    //           name="name"
-    //           value={formName}
-    //           onChange={(e) => {
-    //             setFormName(e.target.value)
-    //             setFormSubmitted(false)
-    //           }}
-    //         />
-    //       </label>
-    //       <label className={profileStyles.formField}>
-    //         Mobile
-    //         <input
-    //           className={profileStyles.inputBox}
-    //           type="text"
-    //           name="name"
-    //           value={formPhoneNumber}
-    //           onChange={(e) => {
-    //             setFormPhoneNumber(e.target.value)
-    //             setFormSubmitted(false)
-    //           }}
-    //         />
-    //       </label>
-    //       <label className={profileStyles.formField}>
-    //         Email
-    //         <input
-    //           className={profileStyles.inputBox}
-    //           type="text"
-    //           name="name"
-    //           value={formEmail}
-    //           onChange={(e) => {
-    //             setFormEmail(e.target.value)
-    //             setFormSubmitted(false)
-    //           }}
-    //         />
-    //       </label>
-    //       <div className={profileStyles.saveButtonContainer}>
-    //         <Button
-    //           type={formSubmitted ? 'saveDisabled' : 'saveActive'}
-    //           text="Save"
-    //         />
-    //       </div>
-    //     </form>
-    //   </div>
-  )
+  // </div>
+  //     <form className={profileStyles.formContainer} onSubmit={handleSubmit}>
+  //       <label className={profileStyles.formField}>
+  //         Name
+  //         <input
+  //           className={profileStyles.inputBox}
+  //           type="text"
+  //           name="name"
+  //           value={formName}
+  //           onChange={(e) => {
+  //             setFormName(e.target.value)
+  //             setFormSubmitted(false)
+  //           }}
+  //         />
+  //       </label>
+  //       <label className={profileStyles.formField}>
+  //         Mobile
+  //         <input
+  //           className={profileStyles.inputBox}
+  //           type="text"
+  //           name="name"
+  //           value={formPhoneNumber}
+  //           onChange={(e) => {
+  //             setFormPhoneNumber(e.target.value)
+  //             setFormSubmitted(false)
+  //           }}
+  //         />
+  //       </label>
+  //       <label className={profileStyles.formField}>
+  //         Email
+  //         <input
+  //           className={profileStyles.inputBox}
+  //           type="text"
+  //           name="name"
+  //           value={formEmail}
+  //           onChange={(e) => {
+  //             setFormEmail(e.target.value)
+  //             setFormSubmitted(false)
+  //           }}
+  //         />
+  //       </label>
+  //       <div className={profileStyles.saveButtonContainer}>
+  //         <Button
+  //           type={formSubmitted ? 'saveDisabled' : 'saveActive'}
+  //           text="Save"
+  //         />
+  //       </div>
+  //     </form>
+  //   </div>
 }

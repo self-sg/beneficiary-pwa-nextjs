@@ -14,32 +14,35 @@ import ProfilePicture from '../../components/profile/ProfilePicture'
 import React, { useState } from 'react'
 import { onAuthStateChanged, auth, signOut } from '../../firebase'
 import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { Avatar } from '@mui/material'
 
-// TODO: handle storing of phone number 
+// TODO: handle storing of phone number
 export default function Profile() {
   const [name, setName] = useState('')
   const [phoneNumber, setPhoneNumber] = useState('')
   const [email, setEmail] = useState('')
-  const [profilePhoto, setProfilePhoto] = useState(null)
+  const [url, setUrl] = useState(null)
   const [loggedIn, setLoggedIn] = useState(false)
 
   const router = useRouter()
 
-  onAuthStateChanged(auth, (user) => {
-    if (user) {
-      const name = user.displayName
-      const email = user.email
-      setName(name)
-      setEmail(email)
-      setLoggedIn(true)
-    } else {
-      console.log("not signed in ")
-      setLoggedIn(false)
-      setTimeout(() => {
-        router.push("/login")
-      }, 1000)
-    }
-  })
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const name = user.displayName
+        const email = user.email
+        const url = user.photoURL
+        setName(name)
+        setEmail(email)
+        setLoggedIn(true)
+        setUrl(url)
+      } else {
+        console.log('not signed in ')
+        router.push('/login')
+      }
+    })
+  }, [])
 
   const menuButtonsDict = [
     [
@@ -61,7 +64,9 @@ export default function Profile() {
       'Edit Account Profile',
       'edit-profile',
       'slim-button-container',
-      () => {router.push('/profile/edit-profile')}
+      () => {
+        router.push('/profile/edit-profile')
+      }
     ],
     [settings, 'Settings', 'settings', 'slim-button-container', () => {}],
     [
@@ -78,26 +83,31 @@ export default function Profile() {
       'slim-button-container',
       () => {}
     ],
-    [logout, 'Logout', 'login', 'slim-button-container', () => {
-      console.log("hey")
-      signOut(auth)
-        .then(() => {
-          console.log("sign out successful")
-          router.push('/login')
-        })
-        .catch((error) => {
-          console.log("there was en error logging out")
-          console.log(error)
-        })
-    }]
+    [
+      logout,
+      'Logout',
+      'login',
+      'slim-button-container',
+      () => {
+        console.log('hey')
+        signOut(auth)
+          .then(() => {
+            console.log('sign out successful')
+            router.push('/login')
+          })
+          .catch((error) => {
+            console.log('there was en error logging out')
+            console.log(error)
+          })
+      }
+    ]
   ]
-
 
   return loggedIn ? (
     <div className={styles.container}>
       <TopNav pageName={'My Profile'} displayBackButton={false} />
       <div className={profileStyles.infoContainer}>
-        <ProfilePicture selectedPhoto={false} />
+        <Avatar src={url} sx={{ width: 150, height: 150 }} />
         <h3 className={profileStyles.name}>{name}</h3>
         <p className={`text-s ${profileStyles.contactDetails}`}>
           {phoneNumber}
@@ -119,10 +129,5 @@ export default function Profile() {
       </div>
       <BottomNav featureName="profile" />
     </div>
-  ) :
-  (
-    <div className={styles.container}>
-      This page is only for authenticated users. Redirecting to login page...
-    </div>
-  ) 
+  ) : null 
 }
