@@ -42,7 +42,7 @@ export default function BottomNav(props: Props) {
         </Link>
       </div>
       <div className={`${styles.tabContainer}`}>
-        <Link href="/profile">
+        <Link href="/profile" >
           {activeTabs === 'profile' ? (
             <div className={styles.tab}>
               <Image

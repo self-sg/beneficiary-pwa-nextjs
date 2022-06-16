@@ -26,11 +26,11 @@
 
 .saveActive {
   composes: primary;
-  width: 100vw;
+  flex: 1; 
 }
 
 .saveDisabled {
   composes: primary;
-  width: 100vw;
-  background-color: var(--accent-disabled);
+  background-color: var(--accent-disabled); 
+  flex: 1;
 }

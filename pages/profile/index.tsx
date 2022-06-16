@@ -12,35 +12,102 @@ import shield from '../../public/assets/icon/shield.svg'
 import logout from '../../public/assets/icon/logout.svg'
 import ProfilePicture from '../../components/profile/ProfilePicture'
 import React, { useState } from 'react'
+import { onAuthStateChanged, auth, signOut } from '../../firebase'
+import { useRouter } from 'next/router'
+import { useEffect } from 'react'
+import { Avatar } from '@mui/material'
 
-// TODO: logout and share app needs to be handled differently from the other buttons
-const menuButtonsDict = [
-  [star, 'Saved Support', 'saved-support', 'block-button-container'],
-  [share, 'Share this App', 'share-this-app', 'block-button-container'],
-  [edit, 'Edit Account Profile', 'edit-profile', 'slim-button-container'],
-  [settings, 'Settings', 'settings', 'slim-button-container'],
-  [
-    file,
-    'Terms and Conditions',
-    'terms-and-conditions',
-    'slim-button-container'
-  ],
-  [shield, 'Privacy Policy', 'privacy-policy', 'slim-button-container'],
-  [logout, 'Logout', 'logout', 'slim-button-container']
-]
-
+// TODO: handle storing of phone number
 export default function Profile() {
-  // TODO: fetch this data from backend instead
-  const [name, setName] = useState('Rachel Tan')
-  const [phoneNumber, setPhoneNumber] = useState('9128 3271')
-  const [email, setEmail] = useState('racheltan@gmail.com')
-  const [profilePhoto, setProfilePhoto] = useState(null)
+  const [name, setName] = useState('')
+  const [phoneNumber, setPhoneNumber] = useState('')
+  const [email, setEmail] = useState('')
+  const [url, setUrl] = useState(null)
+  const [loggedIn, setLoggedIn] = useState(false)
 
-  return (
+  const router = useRouter()
+
+  useEffect(() => {
+    onAuthStateChanged(auth, (user) => {
+      if (user) {
+        const name = user.displayName
+        const email = user.email
+        const url = user.photoURL
+        setName(name)
+        setEmail(email)
+        setLoggedIn(true)
+        setUrl(url)
+      } else {
+        console.log('not signed in ')
+        router.push('/login')
+      }
+    })
+  }, [])
+
+  const menuButtonsDict = [
+    [
+      star,
+      'Saved Support',
+      'saved-support',
+      'block-button-container',
+      () => {}
+    ],
+    [
+      share,
+      'Share this App',
+      'share-this-app',
+      'block-button-container',
+      () => {}
+    ],
+    [
+      edit,
+      'Edit Account Profile',
+      'edit-profile',
+      'slim-button-container',
+      () => {
+        router.push('/profile/edit-profile')
+      }
+    ],
+    [settings, 'Settings', 'settings', 'slim-button-container', () => {}],
+    [
+      file,
+      'Terms and Conditions',
+      'terms-and-conditions',
+      'slim-button-container',
+      () => {}
+    ],
+    [
+      shield,
+      'Privacy Policy',
+      'privacy-policy',
+      'slim-button-container',
+      () => {}
+    ],
+    [
+      logout,
+      'Logout',
+      'login',
+      'slim-button-container',
+      () => {
+        console.log('hey')
+        signOut(auth)
+          .then(() => {
+            console.log('sign out successful')
+            router.push('/login')
+          })
+          .catch((error) => {
+            console.log('there was en error logging out')
+            console.log(error)
+          })
+      }
+    ]
+  ]
+
+  return loggedIn ? (
     <div className={styles.container}>
       <TopNav pageName={'My Profile'} displayBackButton={false} />
       <div className={profileStyles.infoContainer}>
-        <ProfilePicture selectedPhoto={false} />
+        <Avatar src={url} sx={{ width: 150, height: 150 }} />
         <h3 className={profileStyles.name}>{name}</h3>
         <p className={`text-s ${profileStyles.contactDetails}`}>
           {phoneNumber}
@@ -53,13 +120,14 @@ export default function Profile() {
             <MenuButton
               imgSrc={menuButtonInfo[0]}
               buttonText={menuButtonInfo[1]}
-              urlSlug={menuButtonInfo[2]}
+              url={menuButtonInfo[2]}
               buttonStyle={menuButtonInfo[3]}
+              onClick={menuButtonInfo[4]}
             />
           )
         })}
       </div>
       <BottomNav featureName="profile" />
     </div>
-  )
+  ) : null 
 }
