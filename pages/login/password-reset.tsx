@@ -24,14 +24,6 @@ import { auth, signInWithEmailAndPassword } from '../../firebase'
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 
 const PasswordReset = () => {
-  // const [values, setValues] = useState({
-  //   name: '',
-  //   email: '',
-  //   password: '',
-  //   showPassword: false,
-  // });
-
-  // TODO: use formik form submitted status if there is
   const [formSubmitted, setFormSubmitted] = useState(false)
   const [showPassword, setShowPassword] = useState(false)
   const [showPasswordConfirmation, setShowPasswordConfirmation] =
@@ -76,10 +68,6 @@ const PasswordReset = () => {
       setTimeout(() => setAlertVisible(false), 2000)
     }
   })
-
-  // console.log("logging touched ",touched)
-  // console.log(values)
-  // console.log(errors)
 
   return (
     <div style={{ position: 'relative' }}>

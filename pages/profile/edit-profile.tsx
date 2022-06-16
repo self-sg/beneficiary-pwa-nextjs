@@ -47,9 +47,6 @@ const AlertMessage = ({ messageType, messageContent, visible }) => {
   }
 }
 
-// TO-DO: Alert message should display error if there is error in saving info (instead of always displaying saved successfully)
-// TO-DO: Convert form to formik form
-// TO-DO: Error handling for file upload issue
 export default function EditProfile() {
   const hiddenFileInput = React.useRef(null)
   const [user, setCurrUser] = useState(null)
@@ -103,52 +100,6 @@ export default function EditProfile() {
     console.log('updated profile details')
   }
 
-  //   function updateProfilePhoneNumber(newPhoneNumber) {
-  //     //country code plus your phone number excluding leading 0 if exists.
-  //     // var phoneNumber = "+447xxxxxxxxx"; //you could provide a prompt/modal or other field in your UX to replace this phone number.
-
-  //     // let phoneNumber = "+441234567890"; //testing number, ideally you should set this in your firebase auth settings
-  //     // var verificationCode = "123456";
-
-  //     // Turn off phone auth app verification.
-  //     // firebase.auth().settings.appVerificationDisabledForTesting = true;
-
-  //     // This will render a fake reCAPTCHA as appVerificationDisabledForTesting is true.
-  //     // This will resolve after rendering without app verification.
-  //     var appVerifier = new auth.RecaptchaVerifier(
-  //         "recaptcha-container",
-  //         {
-  //             size: "invisible"
-  //         }
-  //     );
-
-  //     var provider = new firebase.auth.PhoneAuthProvider();
-  //     provider.verifyPhoneNumber(phoneNumber, appVerifier)
-  //         .then(function (verificationId) {
-  //             var verificationCode = window.prompt('Please enter the verification ' +
-  //                 'code that was sent to your mobile device.');
-  //             phoneCredential = firebase.auth.PhoneAuthProvider.credential(verificationId, verificationCode);
-  //             user.currentUser.updatePhoneNumber(phoneCredential);
-  //         })
-  //         .then((result) => {
-  //             // Phone credential now linked to current user.
-  //             // User now can sign in with new phone upon logging out.
-  //             console.log(result);
-  //         })
-  //         .catch((error) => {
-  //             // Error occurred.
-  //             console.log(error);
-  //         });
-  // }
-
-  // const handleSubmit = (e) => {
-  //   e.preventDefault()
-  //   updateProfile(auth, formEmail, formPhoneNumber, formName)
-  //   setFormSubmitted(true)
-  //   setAlertVisible(true)
-  //   setTimeout(() => setAlertVisible(false), 2000)
-  // }
-
   const {
     handleSubmit,
     values,
@@ -194,11 +145,7 @@ export default function EditProfile() {
           setFieldValue('email', user.email)
           setUrl(user.photoURL)
           setLoggedIn(true)
-          // setProfilePhoto()
-          // ...
         } else {
-          // User is signed out
-          // ...
           router.push('/login')
         }
       }),

@@ -45,17 +45,12 @@ const ForgotPassword = () => {
       email: yup.string().email('Invalid email').required('Required')
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
       setFormSubmitted(true)
       setAlertVisible(true)
       setTimeout(() => setAlertVisible(false), 2000)
       // TODO: insert backend logic for sending verification email
     }
   })
-
-  // console.log("logging touched ",touched)
-  // console.log(values)
-  // console.log(errors)
 
   return (
     <div style={{ position: 'relative' }}>
