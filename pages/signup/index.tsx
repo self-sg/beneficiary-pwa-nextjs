@@ -94,9 +94,9 @@ const Signup = () => {
     dirty
   } = useFormik({
     initialValues: {
-      name: 'foo',
-      email: 'foobar@example.com',
-      password: 'foobar'
+      name: '',
+      email: '',
+      password: ''
     },
     validationSchema: yup.object().shape({
       name: yup.string().required('Required'),

@@ -102,9 +102,9 @@ const Login = () => {
     dirty
   } = useFormik({
     initialValues: {
-      name: 'foo',
-      email: 'foobar@example.com',
-      password: 'foobar'
+      name: '',
+      email: '',
+      password: ''
     },
     validationSchema: yup.object().shape({
       email: yup.string().email('Invalid email').required('Required'),
