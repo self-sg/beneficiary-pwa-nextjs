@@ -172,6 +172,8 @@ export default function EditProfile() {
     }),
     onSubmit: (values) => {
       setFormSubmitted(true)
+      setAlertVisible(true)
+      setTimeout(() => setAlertVisible(false), 2000)
       updateUserProfile(
         auth,
         values.name,
@@ -203,15 +205,11 @@ export default function EditProfile() {
     []
   )
 
-  // console.log("logging touched ",touched)
-  // console.log(values)
-  // console.log(errors)
-
   return loggedIn ? (
     <div className={styles.container}>
       <TopNav pageName={'Edit Account Profile'} displayBackButton={true} />
       <div style={{position: 'relative'}}>
-        {formSubmitted ? (
+        {formSubmitted && alertVisible ? (
           <Alert
             iconMapping={{
               success: (
@@ -360,64 +358,4 @@ export default function EditProfile() {
       </div>
     </div>
   ) : null
-
-  // return (
-  //   <div className={styles.container}>
-  //     <TopNav pageName={'Edit Account Profile'} displayBackButton={true} />
-  //     <div className={profileStyles.uploadPhotoContainer}>
-  //       <AlertMessage
-  //         messageType="success"
-  //         messageContent="Saved successfully."
-  //         visible={alertVisible}
-  //       />
-
-  // </div>
-  //     <form className={profileStyles.formContainer} onSubmit={handleSubmit}>
-  //       <label className={profileStyles.formField}>
-  //         Name
-  //         <input
-  //           className={profileStyles.inputBox}
-  //           type="text"
-  //           name="name"
-  //           value={formName}
-  //           onChange={(e) => {
-  //             setFormName(e.target.value)
-  //             setFormSubmitted(false)
-  //           }}
-  //         />
-  //       </label>
-  //       <label className={profileStyles.formField}>
-  //         Mobile
-  //         <input
-  //           className={profileStyles.inputBox}
-  //           type="text"
-  //           name="name"
-  //           value={formPhoneNumber}
-  //           onChange={(e) => {
-  //             setFormPhoneNumber(e.target.value)
-  //             setFormSubmitted(false)
-  //           }}
-  //         />
-  //       </label>
-  //       <label className={profileStyles.formField}>
-  //         Email
-  //         <input
-  //           className={profileStyles.inputBox}
-  //           type="text"
-  //           name="name"
-  //           value={formEmail}
-  //           onChange={(e) => {
-  //             setFormEmail(e.target.value)
-  //             setFormSubmitted(false)
-  //           }}
-  //         />
-  //       </label>
-  //       <div className={profileStyles.saveButtonContainer}>
-  //         <Button
-  //           type={formSubmitted ? 'saveDisabled' : 'saveActive'}
-  //           text="Save"
-  //         />
-  //       </div>
-  //     </form>
-  //   </div>
 }

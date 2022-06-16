@@ -31,10 +31,8 @@ import {
   onAuthStateChanged
 } from '../../firebase'
 
-// TODO: Refactor all forms (login, signup, edit-profile) into GenericForm to reduce code duplication
-// TODO: Standardize styles 
 const Signup = () => {
-  const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false)
   const router = useRouter()
   const GoogleProvider = new GoogleAuthProvider()
   const FacebookProvider = new FacebookAuthProvider()
@@ -42,7 +40,7 @@ const Signup = () => {
   onAuthStateChanged(auth, (user) => {
     if (user) {
       console.log('user is logged in')
-      router.push('/')
+      router.push('/signup/success')
     } else {
       console.log('user is not logged in')
     }
@@ -63,10 +61,11 @@ const Signup = () => {
         updateProfile(currUser, {
           displayName: name
         })
+        
       })
       .catch((error) => {
         console.log(error.message)
-      })
+      })    
   }
 
   const signUpWithProvider = (provider) => {
@@ -81,7 +80,7 @@ const Signup = () => {
         console.log(error.message)
       })
 
-    router.push('/signup/success')
+    
   }
 
   const {
@@ -108,9 +107,7 @@ const Signup = () => {
         .min(7, 'Password needs to be at least 7 characters long')
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
       signUp(auth, values.email, values.password, values.name)
-      router.push('/signup/success')
     }
   })
 
@@ -284,7 +281,7 @@ const Signup = () => {
               fullWidth
               id="password"
               name="password"
-              type={showPassword ? "text": "password"}
+              type={showPassword ? 'text' : 'password'}
               value={values.password}
               onChange={handleChange}
               error={touched.password && Boolean(errors.password)}
@@ -294,7 +291,7 @@ const Signup = () => {
                   <InputAdornment position="end">
                     <IconButton
                       aria-label="toggle password visibility"
-                      onClick={() => setShowPassword(! showPassword)}
+                      onClick={() => setShowPassword(!showPassword)}
                       onMouseDown={handleMouseDownPassword}
                       edge="end"
                     >
@@ -315,21 +312,15 @@ const Signup = () => {
             <Box height={8} />
           </Grid>
           <Grid item xs={11} md={8}>
-            <InputLabel sx={{color:"#8E3D57"}} >
-              <Link href="/login">
-                Already have an account?
-              </Link>
+            <InputLabel sx={{ color: '#8E3D57' }}>
+              <Link href="/login">Already have an account?</Link>
             </InputLabel>
           </Grid>
           <Grid item xs={11} md={8}>
             <Box height={24} />
           </Grid>
           <Grid container xs={11} md={8}>
-            <Button
-              type="submit"
-              text="Submit"
-              disabled={!isValid || !dirty}
-            />
+            <Button type="submit" text="Submit" disabled={!isValid || !dirty} />
           </Grid>
         </Grid>
       </form>

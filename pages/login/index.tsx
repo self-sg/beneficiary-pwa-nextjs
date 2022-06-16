@@ -7,7 +7,8 @@ import {
   InputAdornment,
   Typography,
   InputLabel,
-  Box
+  Box,
+  Alert
 } from '@mui/material'
 import TextField from '@mui/material/TextField'
 import { Button as MUIButton } from '@mui/material'
@@ -28,10 +29,14 @@ import {
   FacebookAuthProvider,
   onAuthStateChanged
 } from '../../firebase'
+import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline'
 
 const Login = () => {
   const [showPassword, setShowPassword] = useState(false)
   const [loggedIn, setLoggedIn] = useState(false)
+  const [formSubmitted, setFormSubmitted] = useState(false)
+  const [userNotFound, setUserNotFound] = useState(false)
+  const [wrongPassword, setWrongPassword] = useState(false)
   const router = useRouter()
   const GoogleProvider = new GoogleAuthProvider()
   const FacebookProvider = new FacebookAuthProvider()
@@ -42,8 +47,8 @@ const Login = () => {
         if (user) {
           console.log(user)
           setLoggedIn(true)
-          router.push("/")
-        } 
+          router.push('/')
+        }
       }),
     []
   )
@@ -51,10 +56,18 @@ const Login = () => {
   const signIn = (auth, email, password) => {
     signInWithEmailAndPassword(auth, email, password)
       .then((userCredential) => {
+        router.push('/support')
         console.log(userCredential)
       })
       .catch((error) => {
-        console.log(error)
+        console.log(error.message)
+        if (error.message.includes('user-not-found')) {
+          setUserNotFound(true)
+          setTimeout(() => setUserNotFound(false), 2000)
+        } else if (error.message.includes('wrong-password')) {
+          setWrongPassword(true)
+          setTimeout(() => setWrongPassword(false), 2000)
+        }
       })
   }
 
@@ -69,14 +82,13 @@ const Login = () => {
 
     getRedirectResult(auth)
       .then((result) => {
+        router.push('/support')
         const user = result.user
         console.log(user)
       })
       .catch((error) => {
         console.log(error.message)
       })
-
-    router.push('/signup/success')
   }
 
   const {
@@ -102,16 +114,42 @@ const Login = () => {
         .min(7, 'Password needs to be at least 7 characters long')
     }),
     onSubmit: (values) => {
-      alert(JSON.stringify(values, null, 2))
+      setFormSubmitted(true)
       signIn(auth, values.email, values.password)
-      router.push('/support')
     }
   })
 
-  return ! loggedIn ? (
-    <div style={{ padding: '20px' }}>
+  return !loggedIn ? (
+    <>
+      <div style={{ position: 'relative' }}>
+        {formSubmitted && (userNotFound || wrongPassword) ? (
+          <Alert
+            severity="warning"
+            sx={{
+              backgroundColor: '#EF3E3E',
+              color: 'white',
+              height: '70px',
+              width: '100vw',
+              position: 'absolute',
+              top: '0px',
+              fontSize: 16,
+              display: 'flex',
+              alignItems: 'center',
+              zIndex: 10
+            }}
+          >
+            {userNotFound
+              ? 'No such user exists. Please try again.'
+              : wrongPassword
+              ? 'Wrong password. Please try again.'
+              : ''}
+          </Alert>
+        ) : (
+          <></>
+        )}
+      </div>
       <form onSubmit={handleSubmit}>
-        <Grid container justifyContent="center">
+        <Grid container justifyContent="center" padding="20px">
           <Grid item xs={11} md={8}>
             <Typography
               variant="h3"
@@ -274,15 +312,11 @@ const Login = () => {
             <Box height={24} />
           </Grid>
           <Grid container xs={11} md={8}>
-            <Button
-              type="submit"
-              text="Submit"
-              disabled={!isValid || !dirty}
-            />
+            <Button type="submit" text="Submit" disabled={!isValid || !dirty} />
           </Grid>
         </Grid>
       </form>
-    </div>
+    </>
   ) : null
 }
 
